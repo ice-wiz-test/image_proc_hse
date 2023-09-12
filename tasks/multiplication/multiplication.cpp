@@ -1,5 +1,5 @@
 #include "multiplication.h"
 
 int64_t Multiply(int a, int b) {
-    return 0;
+    return (int64_t)a * (int64_t)b;
 }
