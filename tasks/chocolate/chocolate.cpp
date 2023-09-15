@@ -1,6 +1,7 @@
 #include "chocolate.h"
 
 bool CanBreakSlices(int height, int width, int slices_amount) {
+    if(slices_amount == 0) return false;
     int required_minimum = slices_amount / width;
     if(required_minimum >= height) return false;
     if(slices_amount % height == 0) return true;
