@@ -9,7 +9,7 @@ bool IsLeap(int year) {
         return true;
     }
     if (year % K_CANCEL_CONSTANT == 0) {
-            return false;
+        return false;
     }
     if (year % K_USUAL_CONSTANT == 0) {
         return true;
