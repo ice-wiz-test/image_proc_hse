@@ -6,8 +6,9 @@ int64_t CalculateNthFibonacci(int64_t n) {
     int64_t current_val = 1;
     int64_t prev_val = 0;
     for(int count = 2; count <= n; ++count) {
-        std::swap(current_val, prev_val);
-        current_val += prev_val;
+        int next_member = current_val + prev_val;
+        prev_val = current_val;
+        current_val = next_member;
     }
     return current_val;
 }
