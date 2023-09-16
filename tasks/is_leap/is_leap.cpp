@@ -6,16 +6,13 @@ const int K_CANCEL_CONSTANT = 100;
 bool IsLeap(int year) {
     if (year % K_MOST_IMPORTANT_CONSTANT == 0) {
         return true;
-    }
-    else {
+    } else {
         if (year % K_CANCEL_CONSTANT == 0) {
             return false;
-        }
-        else {
+        } else {
             if (year % K_USUAL_CONSTANT == 0) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         }
