@@ -19,8 +19,8 @@ int64_t ReduceFraction(int64_t numerator, int64_t denominator) {
         denominator = denominator * (-1);
         numerator = numerator * (-1);
     }
-    int64_t BiggestCommonDivisor = NOD(AbsoluteValue(numerator), AbsoluteValue(denominator));
-    numerator = numerator / BiggestCommonDivisor;
-    denominator = denominator / BiggestCommonDivisor;
+    int64_t biggest_common_divisor = NOD(AbsoluteValue(numerator), AbsoluteValue(denominator));
+    numerator = numerator / biggest_common_divisor;
+    denominator = denominator / biggest_common_divisor;
     return numerator + denominator;
 }
