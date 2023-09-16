@@ -1,13 +1,20 @@
 #include "is_leap.h"
 
+const int kMostImportantConstant = 400;
+const int kUsualConstant = 4;
+const int kCancelConstant = 100;
 bool IsLeap(int year) {
-    if(year < 0) year = -year - 4;
-    if(year % 400 == 0) return true;
+    if (year % kMostImportantConstant == 0) 
+        return true;
     else {
-        if(year % 100 == 0) return false;
+        if (year % kCancelConstant == 0)
+            return false;
         else {
-            if(year % 4 == 0) return true;
-            else return false;
+            if(year % kUsualConstant == 0) 
+                return true;
+            else {
+                return false;
+            }
         }
     }
 }
