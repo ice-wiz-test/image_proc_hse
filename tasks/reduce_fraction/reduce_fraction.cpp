@@ -8,7 +8,7 @@ int64_t NOD(int64_t a, int64_t b) {
 }
 
 int64_t AbsoluteValue(int64_t a) {
-    if(a < 0) {
+    if (a < 0) {
         return -a;
     }
     return a;
