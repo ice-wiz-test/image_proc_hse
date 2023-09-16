@@ -42,7 +42,7 @@ bool ValidatePassword(const std::string& password) {
     size_t count_other = 0;
     for (size_t iter = 0; iter < password.size(); ++iter) {
         int code = static_cast<int>(password[iter]);
-        if (code < minimum_code || code > maximum_size) {
+        if (code < minimum_code || code > maximum_code) {
             return false;
         }
         if (IsSmallLetter(password[iter])) {
