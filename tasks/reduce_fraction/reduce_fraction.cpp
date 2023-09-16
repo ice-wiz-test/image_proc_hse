@@ -1,12 +1,16 @@
 #include "reduce_fraction.h"
 
 int64_t NOD(int64_t a, int64_t b) {
-    if (b == 0) return a;
+    if (b == 0) {
+        return a;
+    }
     return NOD(b, a % b);
 }
 
 int64_t AbsoluteValue(int64_t a) {
-    if(a < 0) return -a;
+    if(a < 0) {
+        return -a;
+    }
     return a;
 }
 
