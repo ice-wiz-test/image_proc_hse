@@ -1,10 +1,18 @@
-- group:    00-setup
-  start:    06-09-2023 00:00
-  deadline: 31-12-2023 23:59
-  tasks:
-    - task: multiplication
-      score: 100
 
+- group: 01-homework-two
+  start: 26-09-2023 00:00
+  deadline: 11-10-2023 23:59
+  tasks:
+    - task: sort_students
+      score: 100
+    - task: tests_checking
+      score: 100
+    - task: admission
+      score: 150
+    - task: scorer
+      score: 150
+    - task: unixpath
+      score: 150
 
 - group: 01-homework-one
   start: 11-09-2023 00:00
@@ -26,3 +34,12 @@
       score: 200
     - task: password
       score: 200
+
+- group:    00-setup
+  start:    06-09-2023 00:00
+  deadline: 31-12-2023 23:59
+  tasks:
+    - task: multiplication
+      score: 100
+
+

@@ -27,3 +27,11 @@ add_subdirectory(tasks/fibonacci)
 add_subdirectory(tasks/reduce_fraction)
 add_subdirectory(tasks/palindrome)
 add_subdirectory(tasks/password)
+
+
+# 2
+add_subdirectory(tasks/sort_students)
+add_subdirectory(tasks/tests_checking)
+add_subdirectory(tasks/admission)
+add_subdirectory(tasks/scorer)
+add_subdirectory(tasks/unixpath)
