@@ -29,7 +29,9 @@ bool IsStudentBeforeOnName(const Student& s1, const Student& s2) {
 }
 
 bool IsStudentBeforeInSortedList(const Applicant& a1, const Applicant& a2) {
-    if (a1.points != a2.points) return a1.points > a2.points;
+    if (a1.points != a2.points) {
+        return a1.points > a2.points;
+    }
     return IsStudentBeforeOnName(a1.student, a2.student);
 }
 
@@ -43,7 +45,7 @@ bool IsStudentBeforeInUniListPointer(const Student*& s1, const Student*& s2) {
 
 AdmissionTable FillUniversities(const std::vector<University>& universities, const std::vector<Applicant>& applicants) {
     std::unordered_map<std::string, size_t> university_size;
-    for(const University& uni : universities) {
+    for (const University& uni : universities) {
         university_size[uni.name] = uni.max_students;
     }
     AdmissionTable return_value;
@@ -53,14 +55,14 @@ AdmissionTable FillUniversities(const std::vector<University>& universities, con
     }
     std::sort(sorted_apllicants.begin(), sorted_apllicants.end(), IsStudentBeforePointer);
     for (const Applicant* current_assign : sorted_apllicants) {
-        for (const std::string &preferred_university : current_assign->wish_list) {
+        for (const std::string& preferred_university : current_assign->wish_list) {
             if (return_value[preferred_university].size() != university_size[preferred_university]) {
                 return_value[preferred_university].push_back(&current_assign->student);
                 break;
             }
         }
     }
-    for (const University& uni  : universities) {
+    for (const University& uni : universities) {
         sort(return_value[uni.name].begin(), return_value[uni.name].end(), IsStudentBeforeInUniListPointer);
     }
     return return_value;
