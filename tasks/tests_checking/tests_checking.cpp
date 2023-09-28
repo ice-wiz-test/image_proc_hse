@@ -13,7 +13,7 @@ std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student
     std::vector<std::string> returnOrder;
     returnOrder.reserve(queries.size());
     for (size_t num : queries) {
-        num--; // >= 1
+        num--;  // >= 1
         returnOrder.push_back(currentOrder[num]);
     }
     return returnOrder;
