@@ -18,18 +18,18 @@ bool CompareDate(const Student& s1, const Student & s2) { // сравнивае�
     if (!AreDatesEqual(s1.birth_date, s2.birth_date)) {
         return IsFirstDateSmaller(s1.birth_date, s2.birth_date);
     }
-    if (s1.name != s2.name) {
-        return s1.name < s2.name;
+    if (s1.last_name != s2.last_name) {
+        return s1.last_name < s2.last_name;
     }
-    return s1.last_name < s2.last_name; 
+    return s1.name < s2.name;
 }
 
 bool CompareName(const Student& s1, const Student& s2) {
-    if (s1.name != s2.name) {
-        return s1.name < s2.name;
-    }
     if (s1.last_name != s2.last_name) {
         return s1.last_name < s2.last_name;
+    }
+    if (s1.name != s2.name) {
+        return s1.name < s2.name;
     }
     return IsFirstDateSmaller(s1.birth_date, s2.birth_date);
 }
