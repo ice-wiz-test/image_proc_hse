@@ -1,3 +1,18 @@
+- group: 03-homework-three
+  start: 02-10-2023 00:00
+  deadline: 18-10-2023 23:59
+  tasks:
+    - task: provinces
+      score: 100
+    - task: search
+      score: 150
+    - task: rational
+      score: 100
+    - task: stack
+      score: 100
+    - task: queue
+      score: 150
+
 
 - group: 01-homework-two
   start: 26-09-2023 00:00

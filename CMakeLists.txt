@@ -35,3 +35,11 @@ add_subdirectory(tasks/tests_checking)
 add_subdirectory(tasks/admission)
 add_subdirectory(tasks/scorer)
 add_subdirectory(tasks/unixpath)
+
+
+#3
+add_subdirectory(tasks/provinces)
+add_subdirectory(tasks/search)
+add_subdirectory(tasks/rational)
+add_subdirectory(tasks/stack)
+add_subdirectory(tasks/queue)
