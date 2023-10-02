@@ -6,18 +6,18 @@ const char POINT = '.';
 std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
     if (!path.empty() && path[0] == SEPARATOR) {
         std::deque<std::string> dir_path;
-        for (size_t cur_it = 0; cur_it < path.size();) {
-            if (path[cur_it] == SEPARATOR) {
-                cur_it++;
+        for (size_t current_index = 0; current_index < path.size();) {
+            if (path[current_index] == SEPARATOR) {
+                current_index++;
                 continue;
             }
-            size_t dir_iter = cur_it;
+            size_t dir_iter = current_index;
             std::string cur_dir;
             while (dir_iter < path.size() && path[dir_iter] != SEPARATOR) {
                 cur_dir.push_back(path[dir_iter]);
                 dir_iter++;
             }
-            cur_it = dir_iter;
+            current_index = dir_iter;
             dir_path.push_back(cur_dir);
         }
         std::string abs_path;
@@ -36,14 +36,14 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
             str_index++;
             continue;
         }
-        size_t current_iter = str_index;  // хотим выделить следующую папку
+        size_t current_index = str_index;  // хотим выделить следующую папку
         std::string current_dir_name;
-        while (current_iter < current_working_dir.size() && current_working_dir[current_iter] != SEPARATOR) {
-            current_dir_name.push_back(current_working_dir[current_iter]);
-            current_iter++;
+        while (current_index < current_working_dir.size() && current_working_dir[current_index] != SEPARATOR) {
+            current_dir_name.push_back(current_working_dir[current_index]);
+            current_index++;
         }
         current_path.push_back(current_dir_name);
-        str_index = current_iter;
+        str_index = current_index;
     }
     for (size_t str_index = 0; str_index < path.size();) {
         if (path[str_index] == SEPARATOR) {
@@ -62,14 +62,14 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
                 continue;
             }
         }
-        size_t current_iter = str_index;
+        size_t current_index = str_index;
         std::string current_dir_name;
-        while (current_iter < path.size() && path[current_iter] != SEPARATOR) {
-            current_dir_name.push_back(path[current_iter]);
-            current_iter++;
+        while (current_index < path.size() && path[current_index] != SEPARATOR) {
+            current_dir_name.push_back(path[current_index]);
+            current_index++;
         }
         current_path.push_back(current_dir_name);
-        str_index = current_iter;
+        str_index = current_index;
     }
     std::string absolute_path;
     for (std::string& directory : current_path) {
