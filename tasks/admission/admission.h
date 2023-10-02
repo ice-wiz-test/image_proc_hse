@@ -1,8 +1,9 @@
 #pragma once
 
-#include <vector>
+#include <algorithm>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 struct Date {
     int day = 0;
