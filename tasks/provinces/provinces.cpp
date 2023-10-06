@@ -17,4 +17,3 @@ int64_t CountPassports(const std::vector<int>& provinces) {
     }
     return summary_answer;
 }
-
