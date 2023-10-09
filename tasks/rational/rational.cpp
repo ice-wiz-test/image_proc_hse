@@ -4,9 +4,9 @@
 #include <iostream>
 #include <numeric>
 
-Rational::Rational(int value) { // NOLINT
-    Set(value, static_cast<int64_t>(1)); // NOLINT
-} // NOLINT
+Rational::Rational(int value) {           // NOLINT
+    Set(value, static_cast<int64_t>(1));  // NOLINT
+}  // NOLINT
 
 Rational::Rational(int numer, int denom) {
     Set(numer, denom);
@@ -37,11 +37,11 @@ void Rational::Set(int64_t numer, int64_t denom) {
 }
 
 void Rational::SetNumerator(int value) {
-        Set(value, denom_);
+    Set(value, denom_);
 }
 
 void Rational::SetDenominator(int value) {
-        Set(numer_, value);
+    Set(numer_, value);
 }
 
 Rational& operator+=(Rational& lhs, const Rational& rhs) {
@@ -77,16 +77,21 @@ Rational& operator--(Rational& ratio) {
 }
 
 std::istream& operator>>(std::istream& is, Rational& ratio) {
-    std::string s1 = ""; is >> s1;
-    std::string numer; std::string denom;
+    std::string s1 = "";
+    is >> s1;
+    std::string numer;
+    std::string denom;
     bool have_found_slash = false;
-    for(size_t i = static_cast<size_t>(0); i < s1.size(); ++i) {
+    for (size_t i = static_cast<size_t>(0); i < s1.size(); ++i) {
         if (s1[i] == '/') {
             have_found_slash = true;
             break;
         }
-        if (!have_found_slash) numer.push_back(s1[i]);
-        else denom.push_back(s1[i]);
+        if (!have_found_slash) {
+            numer.push_back(s1[i]);
+        } else {
+            denom.push_back(s1[i]);
+        }
     }
     ratio.SetNumerator(std::stoll(numer));
     ratio.SetDenominator(std::stoll(denom));
@@ -118,7 +123,8 @@ Rational operator+(const Rational& lhs, const Rational& rhs) {
     int64_t new_denom = std::lcm(lhs.GetDenominator(), rhs.GetDenominator());
     int64_t multiply_by_first_ratio = new_denom / lhs.GetDenominator();
     int64_t multiply_by_second_ratio = new_denom / rhs.GetDenominator();
-    return Rational(lhs.GetNumerator() * multiply_by_first_ratio+ + rhs.GetNumerator() * multiply_by_second_ratio, new_denom);
+    return Rational(lhs.GetNumerator() * multiply_by_first_ratio + +rhs.GetNumerator() * multiply_by_second_ratio,
+                    new_denom);
 };
 
 Rational operator-(const Rational& lhs, const Rational& rhs) {
