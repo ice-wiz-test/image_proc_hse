@@ -85,7 +85,7 @@ std::istream& operator>>(std::istream& is, Rational& ratio) {
     for (size_t i = static_cast<size_t>(0); i < s1.size(); ++i) {
         if (s1[i] == '/') {
             have_found_slash = true;
-            break;
+            continue;
         }
         if (!have_found_slash) {
             numer.push_back(s1[i]);
