@@ -15,7 +15,7 @@ class Rational {
 public:
     Rational();
 
-    Rational(int value);
+    Rational(int value);  // NOLINT
 
     Rational(int numer, int denom);
 
@@ -40,8 +40,8 @@ public:
 private:
     void Set(int64_t numer, int64_t denom);
 
-    int numer_;
-    int denom_;
+    int64_t numer_;
+    int64_t denom_;
 };
 
 Rational operator+(const Rational& ratio);
