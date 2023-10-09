@@ -110,15 +110,13 @@ Rational operator-(const Rational& ratio) {
 };
 
 Rational& operator-=(Rational& lhs, const Rational& rhs) {
-    Rational ret = Rational(lhs.GetNumerator(), lhs.GetDenominator());
-    ret += -rhs;
+    lhs += -rhs;
     return lhs;
 };
 
 Rational& operator/=(Rational& lhs, const Rational& rhs) {
-    Rational ret = Rational(lhs.GetNumerator(), lhs.GetDenominator());
     Rational flp = Rational(rhs.GetDenominator(), rhs.GetNumerator());
-    ret *= flp;
+    lhs *= flp;
     return lhs;
 };
 
