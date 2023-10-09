@@ -93,6 +93,9 @@ std::istream& operator>>(std::istream& is, Rational& ratio) {
             denom.push_back(s1[i]);
         }
     }
+    if (denom.empty()) {
+        denom = "1";
+    }
     ratio.SetNumerator(std::stoi(numer));
     ratio.SetDenominator(std::stoi(denom));
     return is;
@@ -179,6 +182,9 @@ bool operator!=(const Rational& lhs, const Rational& rhs) {
 };
 
 std::ostream& operator<<(std::ostream& os, const Rational& ratio) {
-    os << ratio.GetNumerator() << "/" << ratio.GetDenominator();
+    os << ratio.GetNumerator();
+    if( ratio.GetDenominator() != 1) {
+        os << "/" << ratio.GetDenominator();
+    }
     return os;
 };
