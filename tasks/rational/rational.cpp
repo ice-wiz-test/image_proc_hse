@@ -17,19 +17,19 @@ Rational::Rational() {
 }
 
 int Rational::GetNumerator() const {
-    return numer_;
+    return static_cast<int>(numer_);
 }
 
 int Rational::GetDenominator() const {
-    return denom_;
+    return static_cast<int>(denom_);
 }
 void Rational::Set(int64_t numer, int64_t denom) {
     if (denom == 0) {
         throw RationalDivisionByZero{};
     }
-    int GCD = std::gcd(numer, denom);
-    numer_ = numer / GCD;
-    denom_ = denom / GCD;
+    int64_t gcd = std::gcd(numer, denom);
+    numer_ = numer / gcd;
+    denom_ = denom / gcd;
     if (denom < 0) {
         numer_ *= -1;
         denom_ *= -1;
@@ -48,7 +48,7 @@ Rational& operator+=(Rational& lhs, const Rational& rhs) {
     int64_t new_denom = std::lcm(lhs.denom_, rhs.denom_);
     int64_t multiply_by_first_ratio = new_denom / lhs.denom_;
     int64_t multiply_by_second_ratio = new_denom / rhs.denom_;
-    int new_numer = lhs.numer_ * multiply_by_first_ratio + rhs.numer_ * multiply_by_second_ratio;
+    int64_t new_numer = lhs.numer_ * multiply_by_first_ratio + rhs.numer_ * multiply_by_second_ratio;
     lhs.Set(new_numer, new_denom);
     return lhs;
 }
@@ -71,7 +71,7 @@ Rational& operator--(Rational& ratio) {
     ratio.numer_ -= ratio.denom_;
     if (ratio.numer_ % ratio.denom_ == 0) {
         ratio.numer_ /= ratio.denom_;
-        ratio.denom_ = 1;
+        ratio.denom_ = static_cast<int64_t>(1);
     }
     return ratio;
 }
@@ -93,8 +93,8 @@ std::istream& operator>>(std::istream& is, Rational& ratio) {
             denom.push_back(s1[i]);
         }
     }
-    ratio.SetNumerator(std::stoll(numer));
-    ratio.SetDenominator(std::stoll(denom));
+    ratio.SetNumerator(static_cast<int64_t>(std::stoi(numer)));
+    ratio.SetDenominator(static_cast<int64_t>(std::stoi(denom)));
     return is;
 }
 
