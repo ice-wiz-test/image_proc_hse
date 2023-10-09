@@ -9,7 +9,7 @@ Rational::Rational(int value) {           // NOLINT
 }  // NOLINT
 
 Rational::Rational(int numer, int denom) {
-    Set(numer, denom);
+    Set(static_cast<int64_t>(numer), static_cast<int64_t>(denom));
 }
 
 Rational::Rational() {
@@ -77,7 +77,7 @@ Rational& operator--(Rational& ratio) {
 }
 
 std::istream& operator>>(std::istream& is, Rational& ratio) {
-    std::string s1 = "";
+    std::string s1;
     is >> s1;
     std::string numer;
     std::string denom;
@@ -93,8 +93,8 @@ std::istream& operator>>(std::istream& is, Rational& ratio) {
             denom.push_back(s1[i]);
         }
     }
-    ratio.SetNumerator(static_cast<int64_t>(std::stoi(numer)));
-    ratio.SetDenominator(static_cast<int64_t>(std::stoi(denom)));
+    ratio.SetNumerator(std::stoi(numer));
+    ratio.SetDenominator(std::stoi(denom));
     return is;
 }
 
