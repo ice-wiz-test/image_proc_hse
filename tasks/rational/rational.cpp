@@ -123,8 +123,9 @@ Rational operator+(const Rational& lhs, const Rational& rhs) {
     int64_t new_denom = std::lcm(lhs.GetDenominator(), rhs.GetDenominator());
     int64_t multiply_by_first_ratio = new_denom / lhs.GetDenominator();
     int64_t multiply_by_second_ratio = new_denom / rhs.GetDenominator();
-    return Rational( static_cast<int>(lhs.GetNumerator() * multiply_by_first_ratio + +rhs.GetNumerator() * multiply_by_second_ratio),
-                    static_cast<int>(new_denom));
+    return Rational(
+        static_cast<int>(lhs.GetNumerator() * multiply_by_first_ratio + +rhs.GetNumerator() * multiply_by_second_ratio),
+        static_cast<int>(new_denom));
 };
 
 Rational operator-(const Rational& lhs, const Rational& rhs) {
