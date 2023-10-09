@@ -62,7 +62,7 @@ Rational& operator++(Rational& ratio) {
     ratio.numer_ += ratio.denom_;
     if (ratio.numer_ % ratio.denom_ == 0) {
         ratio.numer_ /= ratio.denom_;
-        ratio.denom_ = 1;
+        ratio.denom_ = static_cast<int64_t>(1);
     }
     return ratio;
 }
@@ -127,7 +127,7 @@ Rational operator+(const Rational& lhs, const Rational& rhs) {
     int64_t multiply_by_first_ratio = new_denom / lhs.GetDenominator();
     int64_t multiply_by_second_ratio = new_denom / rhs.GetDenominator();
     return Rational(
-        static_cast<int>(lhs.GetNumerator() * multiply_by_first_ratio + +rhs.GetNumerator() * multiply_by_second_ratio),
+        static_cast<int>(lhs.GetNumerator() * multiply_by_first_ratio + rhs.GetNumerator() * multiply_by_second_ratio),
         static_cast<int>(new_denom));
 };
 
@@ -148,13 +148,15 @@ Rational operator/(const Rational& lhs, const Rational& rhs) {
 };
 
 Rational operator++(Rational& ratio, int) {
+    Rational ret = ratio;
     ratio.SetNumerator(ratio.GetNumerator() + ratio.GetDenominator());
-    return Rational(ratio.GetNumerator(), ratio.GetDenominator());
+    return ret;
 };
 
 Rational operator--(Rational& ratio, int) {
+    Rational ret = ratio;
     ratio.SetNumerator(ratio.GetNumerator() - ratio.GetDenominator());
-    return Rational(ratio.GetNumerator(), ratio.GetDenominator());
+    return ret;
 };
 
 bool operator<(const Rational& lhs, const Rational& rhs) {
