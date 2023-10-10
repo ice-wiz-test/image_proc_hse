@@ -1,5 +1,7 @@
 #pragma once
 
+#include <numeric>
+#include <set>
 #include <string_view>
 #include <vector>
 
