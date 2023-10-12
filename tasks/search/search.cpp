@@ -59,10 +59,14 @@ std::vector<std::string_view> DocumentDec(std::string_view text) {
             continue;
         }
         size_t right_document_end = current_iterator;
+        bool have_at_least_one_letter = false;
         while (right_document_end < text.size() && text[right_document_end] != STR_END) {
+            if (IsAlpha(text[right_document_end])) {
+                have_at_least_one_letter = true;
+            }
             right_document_end++;
         }
-        ret_value.push_back(text.substr(current_iterator, right_document_end - current_iterator));
+        if (have_at_least_one_letter) ret_value.push_back(text.substr(current_iterator, right_document_end - current_iterator));
         current_iterator = right_document_end;
     }
     return ret_value;
