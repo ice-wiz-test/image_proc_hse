@@ -9,14 +9,14 @@ bool IsAlpha(char c) {
 std::set<std::string> DifferentWord(std::string_view text) {
     std::set<std::string> returned_set;
     size_t current_iterator = 0;
-    while(current_iterator < text.size()) {
-        if(!isalpha(text[current_iterator])) {
+    while (current_iterator < text.size()) {
+        if (!IsAlpha(text[current_iterator])) {
             current_iterator++;
             continue;
         }
         std::string current_word;
         size_t right_word_iter = current_iterator;
-        while(right_word_iter < text.size() && IsAlpha(text[right_word_iter])) {
+        while (right_word_iter < text.size() && IsAlpha(text[right_word_iter])) {
             current_word.push_back(text[right_word_iter]);
             right_word_iter++;
             continue;
@@ -30,8 +30,8 @@ std::set<std::string> DifferentWord(std::string_view text) {
 std::map<std::string, size_t> DecompDocument(std::string_view text) {
     size_t current_iter = 0;
     std::map<std::string, size_t> stored_words;
-    while(current_iter < text.size()) {
-        if(!IsAlpha(text[current_iter])) {
+    while (current_iter < text.size()) {
+        if (!IsAlpha(text[current_iter])) {
             current_iter++;
             continue;
         }
@@ -96,7 +96,8 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
                 continue;
             }
             size_t how_many_times_present = exists_in_how_many_documents[pr.first];
-            double idf_weight = log(static_cast<double>(allDocuments.size()) / static_cast<double>(how_many_times_present));
+            double idf_weight = 
+                log(static_cast<double>(allDocuments.size()) / static_cast<double>(how_many_times_present));
             current_value += idf_weight * document_weight;
         }
         current_answer.insert(std::make_pair(current_value, sv));
