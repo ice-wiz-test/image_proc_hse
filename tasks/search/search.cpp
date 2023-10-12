@@ -6,6 +6,11 @@ bool IsAlpha(char c) {
     return isalpha(static_cast<int>(c)) != 0;
 }
 
+char MyTolower(char ch)
+{
+    return static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
+}
+
 std::set<std::string> DifferentWord(std::string_view text) {
     std::set<std::string> returned_set;
     size_t current_iterator = 0;
@@ -17,7 +22,7 @@ std::set<std::string> DifferentWord(std::string_view text) {
         std::string current_word;
         size_t right_word_iter = current_iterator;
         while (right_word_iter < text.size() && IsAlpha(text[right_word_iter])) {
-            current_word.push_back(tolower(text[right_word_iter]));
+            current_word.push_back(MyTolower(text[right_word_iter]));
             right_word_iter++;
         }
         returned_set.insert(current_word);
@@ -37,7 +42,7 @@ std::map<std::string, size_t> DecompDocument(std::string_view text) {
         std::string next_word;
         size_t next_word_iter = current_iter;
         while (next_word_iter < text.size() && IsAlpha(text[next_word_iter])) {
-            next_word.push_back(tolower(text[next_word_iter]));
+            next_word.push_back(MyTolower(text[next_word_iter]));
             next_word_iter++;
         }
         stored_words[next_word]++;
