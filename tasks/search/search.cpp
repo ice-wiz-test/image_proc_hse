@@ -76,7 +76,7 @@ std::vector<std::string_view> DocumentDec(std::string_view text) {
 }
 
 bool compare_2(const std::pair<double, std::pair<int, std::string_view>>& s1,
-                const std::pair<double, std::pair<int, std::string_view>>& s2) {
+               const std::pair<double, std::pair<int, std::string_view>>& s2) {
     if (std::abs(s1.first - s2.first) < EPS) {
         return s1.second.first < s2.second.first;
     }
