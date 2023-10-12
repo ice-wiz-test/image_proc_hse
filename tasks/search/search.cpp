@@ -19,7 +19,6 @@ std::set<std::string> DifferentWord(std::string_view text) {
         while (right_word_iter < text.size() && IsAlpha(text[right_word_iter])) {
             current_word.push_back(text[right_word_iter]);
             right_word_iter++;
-            continue;
         }
         returned_set.insert(current_word);
         current_iterator = right_word_iter;
@@ -75,7 +74,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::vector<std::string_view> allDocuments = DocumentDec(text);
     for (std::string_view sv : allDocuments) {
         std::set<std::string> words_inside = DifferentWord(sv);
-        for (std::string word_in_doc : words_inside) {
+        for (const std::string &word_in_doc : words_inside) {
             std::set<std::string>::iterator it1 = query_words.lower_bound(word_in_doc);
             if (it1 != query_words.end() && (*it1) == word_in_doc) {
                 exists_in_how_many_documents[word_in_doc]++;
@@ -83,14 +82,14 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         }
     }
     for (std::string_view sv : allDocuments) {
-        std::map<std::string, size_t> allDocumentWords = DecompDocument(sv);
+        std::map<std::string, size_t> all_document_words = DecompDocument(sv);
         size_t count_different_words = 0;
-        for (std::pair<std::string, size_t> pr : allDocumentWords) {
+        for (std::pair<std::string, size_t> pr : all_document_words) {
             count_different_words += pr.second;
         }
         double current_value = 0;
-        for (std::pair<std::string, size_t> pr : allDocumentWords) {
-            double document_weight = (static_cast<double>(pr.second)) / count_different_words;
+        for (std::pair<std::string, size_t> pr : all_document_words) {
+            double document_weight = (static_cast<double>(pr.second)) / (static_cast<double>(count_different_words));
             std::set<std::string>::iterator found_iterator = query_words.lower_bound(pr.first);
             if (found_iterator == query_words.end() || (*found_iterator) != pr.first) {
                 continue;
