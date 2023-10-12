@@ -75,7 +75,7 @@ std::vector<std::string_view> DocumentDec(std::string_view text) {
     return ret_value;
 }
 
-bool compare_2(const std::pair<double, std::pair<int, std::string_view>>& s1,
+bool Compare2(const std::pair<double, std::pair<int, std::string_view>>& s1,
                const std::pair<double, std::pair<int, std::string_view>>& s2) {
     if (std::abs(s1.first - s2.first) < EPS) {
         return s1.second.first < s2.second.first;
@@ -125,7 +125,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         }
         current_answer.push_back(std::make_pair(current_value, std::make_pair(current_number, sv)));
     }
-    sort(current_answer.begin(), current_answer.end(), compare_2);
+    sort(current_answer.begin(), current_answer.end(), Compare2);
     std::vector<std::string_view> returned_views;
     for (size_t index = 0; index < std::min(results_count, current_answer.size()); ++index) {
         returned_views.push_back(current_answer[index].second.second);
