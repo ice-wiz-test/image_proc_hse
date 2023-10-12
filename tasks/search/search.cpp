@@ -71,8 +71,8 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::map<std::string, size_t> exists_in_how_many_documents;
     std::set<std::string> query_words = DifferentWord(query);
     std::set<std::pair<double, std::string_view>> current_answer;
-    std::vector<std::string_view> allDocuments = DocumentDec(text);
-    for (std::string_view sv : allDocuments) {
+    std::vector<std::string_view> all_documents = DocumentDec(text);
+    for (std::string_view sv : all_documents) {
         std::set<std::string> words_inside = DifferentWord(sv);
         for (const std::string &word_in_doc : words_inside) {
             std::set<std::string>::iterator it1 = query_words.lower_bound(word_in_doc);
@@ -81,7 +81,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             }
         }
     }
-    for (std::string_view sv : allDocuments) {
+    for (std::string_view sv : all_documents) {
         std::map<std::string, size_t> all_document_words = DecompDocument(sv);
         size_t count_different_words = 0;
         for (std::pair<std::string, size_t> pr : all_document_words) {
@@ -96,7 +96,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             }
             size_t how_many_times_present = exists_in_how_many_documents[pr.first];
             double idf_weight =
-                log(static_cast<double>(allDocuments.size()) / static_cast<double>(how_many_times_present));
+                log(static_cast<double>(all_documents.size()) / static_cast<double>(how_many_times_present));
             current_value += idf_weight * document_weight;
         }
         current_answer.insert(std::make_pair(current_value, sv));
