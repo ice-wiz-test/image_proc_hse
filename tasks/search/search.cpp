@@ -109,6 +109,9 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
                 log(static_cast<double>(all_documents.size()) / static_cast<double>(how_many_times_present));
             current_value += idf_weight * document_weight;
         }
+        if (current_value == 0) {
+            continue;
+        }
         current_answer.insert(std::make_pair(current_value, sv));
     }
     std::vector<std::string_view> returned_views;
