@@ -66,7 +66,9 @@ std::vector<std::string_view> DocumentDec(std::string_view text) {
             }
             right_document_end++;
         }
-        if (have_at_least_one_letter) ret_value.push_back(text.substr(current_iterator, right_document_end - current_iterator));
+        if (have_at_least_one_letter) {
+            ret_value.push_back(text.substr(current_iterator, right_document_end - current_iterator));
+        }
         current_iterator = right_document_end;
     }
     return ret_value;
