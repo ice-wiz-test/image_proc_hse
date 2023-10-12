@@ -6,8 +6,7 @@ bool IsAlpha(char c) {
     return isalpha(static_cast<int>(c)) != 0;
 }
 
-char MyTolower(char ch)
-{
+char MyTolower(char ch) {
     return static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
 }
 
