@@ -1,6 +1,8 @@
 #include "search.h"
 
 const char STR_END = '\n';
+const double EPS = 0.000001;
+
 
 bool IsAlpha(char c) {
     return isalpha(static_cast<int>(c)) != 0;
@@ -74,13 +76,20 @@ std::vector<std::string_view> DocumentDec(std::string_view text) {
     return ret_value;
 }
 
+bool compare_2(const std::pair<double, std::pair<int, std::string_view>>& s1, const std::pair<double, std::pair<int, std::string_view>>& s2) {
+    if (std::abs(s1.first - s2.first) < EPS) {
+        return s1.second.first < s2.second.first;
+    }
+    return s1.first > s2.first;
+}
+
 std::vector<std::string_view> Search(std::string_view text, std::string_view query, size_t results_count) {
     if (results_count == 0) {
         return {};
     }
     std::map<std::string, size_t> exists_in_how_many_documents;
     std::set<std::string> query_words = DifferentWord(query);
-    std::set<std::pair<double, std::string_view>> current_answer;
+    std::vector<std::pair<double, std::pair<size_t, std::string_view>>> current_answer;
     std::vector<std::string_view> all_documents = DocumentDec(text);
     for (std::string_view sv : all_documents) {
         std::set<std::string> words_inside = DifferentWord(sv);
@@ -91,7 +100,9 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             }
         }
     }
+    size_t current_number = 0;
     for (std::string_view sv : all_documents) {
+        current_number++;
         std::map<std::string, size_t> all_document_words = DecompDocument(sv);
         size_t count_different_words = 0;
         for (std::pair<std::string, size_t> pr : all_document_words) {
@@ -112,13 +123,12 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         if (current_value == 0) {
             continue;
         }
-        current_answer.insert(std::make_pair(current_value, sv));
+        current_answer.push_back(std::make_pair(current_value, std::make_pair(current_number, sv)));
     }
+    sort(current_answer.begin(), current_answer.end(), compare_2);
     std::vector<std::string_view> returned_views;
-    std::set<std::pair<double, std::string_view>>::reverse_iterator right_iter = current_answer.rbegin();
-    while (right_iter != current_answer.rend() && returned_views.size() != results_count) {
-        returned_views.push_back(right_iter->second);
-        right_iter++;
+    for (size_t index = 0; index < std::min(results_count, current_answer.size()); ++index) {
+        returned_views.push_back(current_answer[index].second.second);
     }
     return returned_views;
 }
