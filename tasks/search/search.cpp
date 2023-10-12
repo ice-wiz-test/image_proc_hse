@@ -3,7 +3,6 @@
 const char STR_END = '\n';
 const double EPS = 0.000001;
 
-
 bool IsAlpha(char c) {
     return isalpha(static_cast<int>(c)) != 0;
 }
@@ -76,7 +75,8 @@ std::vector<std::string_view> DocumentDec(std::string_view text) {
     return ret_value;
 }
 
-bool compare_2(const std::pair<double, std::pair<int, std::string_view>>& s1, const std::pair<double, std::pair<int, std::string_view>>& s2) {
+bool compare_2(const std::pair<double, std::pair<int, std::string_view>>& s1,
+                const std::pair<double, std::pair<int, std::string_view>>& s2) {
     if (std::abs(s1.first - s2.first) < EPS) {
         return s1.second.first < s2.second.first;
     }
@@ -93,7 +93,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::vector<std::string_view> all_documents = DocumentDec(text);
     for (std::string_view sv : all_documents) {
         std::set<std::string> words_inside = DifferentWord(sv);
-        for (const std::string &word_in_doc : words_inside) {
+        for (const std::string& word_in_doc : words_inside) {
             std::set<std::string>::iterator it1 = query_words.lower_bound(word_in_doc);
             if (it1 != query_words.end() && (*it1) == word_in_doc) {
                 exists_in_how_many_documents[word_in_doc]++;
