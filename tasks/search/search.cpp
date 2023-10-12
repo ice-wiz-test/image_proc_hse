@@ -96,7 +96,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
                 continue;
             }
             size_t how_many_times_present = exists_in_how_many_documents[pr.first];
-            double idf_weight = 
+            double idf_weight =
                 log(static_cast<double>(allDocuments.size()) / static_cast<double>(how_many_times_present));
             current_value += idf_weight * document_weight;
         }
