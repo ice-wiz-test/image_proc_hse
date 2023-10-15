@@ -17,7 +17,7 @@ void Stack::Pop() {
         throw "Stack is empty!";
     }
     Node* t = head_->previous;
-    delete []head_;
+    delete[] head_;
     head_ = t;
     size_--;
 }
@@ -35,17 +35,17 @@ int32_t Stack::Size() const {
 
 void Stack::Clear() {
     while (head_ != nullptr) {
-        Node*t = head_->previous;
-        delete []head_;
+        Node* t = head_->previous;
+        delete[] head_;
         size_--;
         head_ = t;
     }
 }
 
-bool Stack::Empty() const  {
+bool Stack::Empty() const {
     return size_ == 0;
 }
 
-Stack::~Stack (){
+Stack::~Stack() {
     Clear();
 }
