@@ -1,7 +1,6 @@
 #include "stack.h"
 
-Node::Node(int32_t value, Node* previous) : value(value), previous(previous) {
-}
+Node::Node(int32_t Value, Node* Prev) : value(value), previous(Prev) {}
 
 Stack::Stack() {
     size_ = 0;
@@ -18,7 +17,7 @@ void Stack::Pop() {
         throw "Stack is empty!";
     }
     Node* t = head_->previous;
-    delete[] head_;
+    delete head_;
     head_ = t;
     size_--;
 }
@@ -37,7 +36,7 @@ int32_t Stack::Size() const {
 void Stack::Clear() {
     while (head_ != nullptr) {
         Node* t = head_->previous;
-        delete[] head_;
+        delete head_;
         size_--;
         head_ = t;
     }
