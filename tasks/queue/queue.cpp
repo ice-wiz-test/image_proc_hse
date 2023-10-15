@@ -25,11 +25,14 @@ void Queue::Pop() {
         throw("Queue is empty!");
         return;
     }
+    Node* s = front_;
     if (front_ != tail_) {
         front_ = front_->next;
+        delete s;
     } else {
         front_ = front_->next;
         tail_ = front_;
+        delete s;
     }
     size_--;
 }
