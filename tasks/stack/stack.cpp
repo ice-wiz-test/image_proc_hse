@@ -1,6 +1,6 @@
 #include "stack.h"
 
-Node::Node(int32_t Value, Node* Prev) : value(Value), previous(Prev) {
+Node::Node(int32_t value, Node* prev) : value(value), previous(prev) {
 }
 
 Stack::Stack() {
