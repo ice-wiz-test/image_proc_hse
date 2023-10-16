@@ -17,9 +17,9 @@ void Stack::Pop() {
     if (head_ == nullptr) {
         throw "Stack is empty!";
     }
-    Node* t = head_->previous;
+    Node* next_head = head_->previous;
     delete head_;
-    head_ = t;
+    head_ = next_head;
     size_--;
 }
 
@@ -36,10 +36,10 @@ int32_t Stack::Size() const {
 
 void Stack::Clear() {
     while (head_ != nullptr) {
-        Node* t = head_->previous;
+        Node* next_head = head_->previous;
         delete head_;
         size_--;
-        head_ = t;
+        head_ = next_head;
     }
 }
 
