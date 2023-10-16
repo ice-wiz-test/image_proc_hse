@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <stdexcept>
 #include <iostream>
 #include <numeric>
@@ -30,7 +31,7 @@ public:
 
     friend Rational& operator*=(Rational& lhs, const Rational& rhs);
 
-    friend Rational& operator++(Rational& ratio);  // faster than += 1
+    friend Rational& operator++(Rational& ratio);
 
     friend Rational& operator--(Rational& ratio);
 
@@ -39,8 +40,8 @@ public:
 private:
     void Set(int64_t numer, int64_t denom);
 
-    int numer_;
-    int denom_;
+    int64_t numer_;
+    int64_t denom_;
 };
 
 Rational operator+(const Rational& ratio);
