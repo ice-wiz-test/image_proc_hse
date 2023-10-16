@@ -50,9 +50,9 @@ int32_t Queue::Size() const {
 
 void Queue::Clear() {
     while (front_ != nullptr) {
-        Node* next_t = front_->next;
+        Node* next_front = front_->next;
         delete front_;
-        front_ = next_t;
+        front_ = next_front;
     }
     tail_ = nullptr;
     size_ = 0;
