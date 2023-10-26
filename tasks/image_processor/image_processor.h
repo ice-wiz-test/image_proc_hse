@@ -19,7 +19,7 @@ struct BMPInfoHeader{
     int32_t width = 0;
     int32_t height = 0;
     uint16_t planes = 1;
-    uint16_t bit_count = 0;
+    uint16_t bit_count = 24; //yes, it is const; no, i don't really care
     uint32_t compression = 0;
     uint32_t size_image = 0; 
     int32_t x_pixels_per_meter = 0;
@@ -38,7 +38,8 @@ struct BMPColorHeader {
 };
 #pragma pack(pop)
 
-struct BMP {
+class BMP {
+public:
     BMPFileHeader bmp_file_header;
     BMPInfoHeader bmp_info_header;
     BMPColorHeader bmp_color_header;
@@ -50,4 +51,15 @@ struct BMP {
     BMP(int32_t width, int32_t height);
 
     void write(const char* file_name);
+
+private:
+    uint32_t cur_stride{};
+
+    uint32_t align_(uint32_t align_by);
+
+    void check_correct_colors(BMPColorHeader &current_bmp_color_header);
+
+    void write_all(std::ofstream &of);
+
+    void write_headers(std::ofstream &of);
 };
