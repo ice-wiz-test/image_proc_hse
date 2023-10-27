@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <iostream>
+#include "pixel.h"
 
 #pragma pack(push, 1)
 struct BMPFileHeader{
@@ -43,7 +44,7 @@ public:
     BMPFileHeader bmp_file_header;
     BMPInfoHeader bmp_info_header;
     BMPColorHeader bmp_color_header;
-    std::vector<uint8_t> data;
+    std::vector<std::vector<Pixel>> data;
     BMP(const char* file_name);
     
     void read(const char* file_name);
