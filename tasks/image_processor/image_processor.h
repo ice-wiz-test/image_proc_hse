@@ -53,6 +53,8 @@ public:
 
     void write(const char* file_name);
 
+    void crop(int32_t new_height, int32_t new_wdith);
+
 private:
     uint32_t cur_stride{};
 
