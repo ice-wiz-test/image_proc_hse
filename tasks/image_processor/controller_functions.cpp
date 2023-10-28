@@ -36,8 +36,7 @@ void Controller::make_all_adjustments(BMP& image) {
             std::string left_to_do = use_sequential[current_string_index].substr(5);
             try {
                 d = stod(left_to_do);
-            }
-            catch(const std::exception& e) {
+            } catch (const std::exception& e) {
                 current_string_index++;
                 continue;
             }
@@ -46,6 +45,5 @@ void Controller::make_all_adjustments(BMP& image) {
             current_string_index++;
             continue;
         }
-
     }
 }

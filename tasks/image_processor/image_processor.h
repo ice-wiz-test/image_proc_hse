@@ -64,9 +64,9 @@ public:
 private:
     uint32_t align_(uint32_t align_by);
 
-    void check_correct_colors(BMPColorHeader &current_bmp_color_header);
+    void check_correct_colors(BMPColorHeader& current_bmp_color_header);
 
-    void write_all(std::ofstream &of);
+    void write_all(std::ofstream& of);
 
-    void write_headers(std::ofstream &of);
+    void write_headers(std::ofstream& of);
 };
