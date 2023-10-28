@@ -1,26 +1,25 @@
 #include "matrix_filters.h"
 
-const double minimum_value = 0;
-const double maximum_value = 255;
+const double MINIMUM_VALUE = 0;
+const double MAXIMUM_VALUE = 255;
 
-double norm_double(double t1) {
-    return std::max(minimum_value, std::min(maximum_value, t1));
+double NormDouble(double t1) {
+    return std::max(MINIMUM_VALUE, std::min(MAXIMUM_VALUE, t1));
 }
 
-double try_double(double t1, double threshold) {
+double TryDouble(double t1, double threshold) {
     if (t1 > threshold) {
-        return maximum_value;
+        return MAXIMUM_VALUE;
     } else {
-        return minimum_value;
+        return MINIMUM_VALUE;
     }
 }
 
 void AbstractFilter::Process(BMP& image) {
-    return;
 }
 
-uint8_t get_pixel_from_double(double t1) {
-    long long get_rounded = std::llround(t1);
+uint8_t GetPixelFromDouble(double t1) {
+    int64_t get_rounded = std::llround(t1);
     return static_cast<uint8_t>(get_rounded);
 }
 
@@ -43,12 +42,12 @@ void MatrixFilter::Process(BMP& image) {
                     resulting_red += static_cast<double>(pixel_reference->red) * matrix[x_coord][y_coord];
                 }
             }
-            resulting_blue = norm_double(resulting_blue);
-            resulting_green = norm_double(resulting_green);
-            resulting_red = norm_double(resulting_red);
+            resulting_blue = NormDouble(resulting_blue);
+            resulting_green = NormDouble(resulting_green);
+            resulting_red = NormDouble(resulting_red);
             new_data[row_index][other_index] =
-                Pixel(get_pixel_from_double(resulting_blue), get_pixel_from_double(resulting_green),
-                      get_pixel_from_double(resulting_red));
+                Pixel(GetPixelFromDouble(resulting_blue), GetPixelFromDouble(resulting_green),
+                      GetPixelFromDouble(resulting_red));
         }
     }
     image.data = new_data;
@@ -68,12 +67,12 @@ void LinearFilter::Process(BMP& image) {
             double resulting_red = linear_filters[2][0] + linear_filters[2][1] * static_cast<double>(cur_pixel->blue) +
                                    linear_filters[2][2] * static_cast<double>(cur_pixel->green) +
                                    linear_filters[2][3] * static_cast<double>(cur_pixel->red);
-            resulting_blue = norm_double(resulting_blue);
-            resulting_green = norm_double(resulting_green);
-            resulting_red = norm_double(resulting_red);
-            cur_pixel->blue = resulting_blue;
-            cur_pixel->green = resulting_green;
-            cur_pixel->red = resulting_red;
+            resulting_blue = NormDouble(resulting_blue);
+            resulting_green = NormDouble(resulting_green);
+            resulting_red = NormDouble(resulting_red);
+            cur_pixel->blue = static_cast<uint8_t>(resulting_blue);
+            cur_pixel->green = static_cast<uint8_t>(resulting_green);
+            cur_pixel->red = static_cast<uint8_t>(resulting_red);
         }
     }
 }
@@ -97,12 +96,12 @@ void MatrixFilter::Process(BMP& image, double threshold) {
                     resulting_red += static_cast<double>(pixel_reference->red) * matrix[x_coord][y_coord];
                 }
             }
-            resulting_blue = try_double(resulting_blue, threshold);
-            resulting_green = try_double(resulting_green, threshold);
-            resulting_red = try_double(resulting_red, threshold);
+            resulting_blue = TryDouble(resulting_blue, threshold);
+            resulting_green = TryDouble(resulting_green, threshold);
+            resulting_red = TryDouble(resulting_red, threshold);
             new_data[row_index][other_index] =
-                Pixel(get_pixel_from_double(resulting_blue), get_pixel_from_double(resulting_green),
-                      get_pixel_from_double(resulting_red));
+                Pixel(GetPixelFromDouble(resulting_blue), GetPixelFromDouble(resulting_green),
+                      GetPixelFromDouble(resulting_red));
         }
     }
     image.data = new_data;

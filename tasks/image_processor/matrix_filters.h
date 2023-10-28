@@ -40,7 +40,7 @@ public:
         matrix = corr_matrix;
     }
 
-    void Process(BMP& image);
+    void Process(BMP& image) override;
 
     void Process(BMP& image, double threshold);
 };
@@ -63,7 +63,7 @@ public:
         linear_filters = lin_matrix;
     }
 
-    void Process(BMP& image);
+    void Process(BMP& image) override;
 };
 
 class NegativeFilter : public LinearFilter {
@@ -85,7 +85,7 @@ public:
         threshold = thr;
     }
 
-    void Process(BMP& image) {
+    void Process(BMP& image) override {
         GrayFilter::Process(image);
         MatrixFilter::Process(image, threshold);
     }
