@@ -44,11 +44,11 @@ void BMP::WriteAll(std::ofstream& of) {
 void BMP::Read(const char* fname) {
     std::ifstream inp{fname, std::ios_base::binary};
     if (inp) {
-        inp.read((char*)(&bmp_file_header), sizeof(bmp_file_header));
-        if (bmp_file_header.file_type != 0x4D42) {
+        inp.read(reinterpret_cast<char*>(&bmp_file_header), sizeof(bmp_file_header));
+        if (bmp_file_header.file_type != FILETYPE) {
             throw std::runtime_error("Please use the correct format");
         }
-        inp.read((char*)&bmp_info_header, sizeof(bmp_info_header));
+        inp.read(reinterpret_cast<char*>(&bmp_info_header), sizeof(bmp_info_header));
         inp.seekg(bmp_file_header.offset_data, inp.beg);
         bmp_info_header.size = sizeof(BMPInfoHeader);
         bmp_file_header.offset_data = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader);
@@ -62,7 +62,7 @@ void BMP::Read(const char* fname) {
                 for (int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
                     for (int32_t second_index = 0; second_index < bmp_info_header.width; ++second_index) {
                         std::vector<uint8_t> next_color(3);
-                        inp.read(reinterpret_cast<char*>(next_color.data()), next_color.size());
+                        inp.read(reinterpret_cast<char*>(next_color.data()), sizeof(next_color.size));
                         data[row_index][second_index] = Pixel(next_color[0], next_color[1], next_color[2]);
                     }
                 }
@@ -74,7 +74,7 @@ void BMP::Read(const char* fname) {
                 std::vector<uint8_t> cur_bytes(cur_stride);
                 for (int32_t y = 0; y < bmp_info_header.height; ++y) {
                     inp.read(reinterpret_cast<char*>(cur_bytes.data()), cur_stride);
-                    inp.read(reinterpret_cast<char*>(padding_row.data()), padding_row.size());
+                    inp.read(reinterpret_cast<char*>(padding_row.data()), sizeof(padding_row));
                     for (int32_t x = 0; x < bmp_info_header.width; ++x) {
                         data[y][x] = Pixel(cur_bytes[x * 3], cur_bytes[x * 3 + 1], cur_bytes[x * 3 + 2]);
                     }
@@ -99,7 +99,7 @@ BMP::BMP(const char* fname) {
 void BMP::Write(const char* fname) {
     std::ofstream of{fname, std::ios_base::binary};
     if (of) {
-        if (bmp_info_header.bit_count == 24) {
+        if (bmp_info_header.bit_count == BITCOUNT) {
             WriteAll(of);
         } else {
             throw std::runtime_error("This program only works with 24-bit BMP image at the moment");
