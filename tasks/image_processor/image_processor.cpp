@@ -29,11 +29,4 @@ int main(int argc, char** argv) {
         std::cerr << "Try again\n" << std::endl;
         return 0;
     }
-    /*BMP write_BMP =
-    BMP("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/lenna.bmp");
-    Controller generic_controller = Controller();
-    generic_controller.add_string("-gs");
-    generic_controller.add_string("-neg");
-    generic_controller.make_all_adjustments(write_BMP);
-    write_BMP.write("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/test2.bmp");*/
 }

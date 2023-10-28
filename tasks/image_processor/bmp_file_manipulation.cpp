@@ -62,7 +62,7 @@ void BMP::Read(const char* fname) {
                 for (int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
                     for (int32_t second_index = 0; second_index < bmp_info_header.width; ++second_index) {
                         std::vector<uint8_t> next_color(3);
-                        inp.read(reinterpret_cast<char*>(next_color.data()), sizeof(next_color.size));
+                        inp.read(reinterpret_cast<char*>(next_color.data()), static_cast<std::streamsize>(next_color.size()));
                         data[row_index][second_index] = Pixel(next_color[0], next_color[1], next_color[2]);
                     }
                 }
@@ -74,7 +74,7 @@ void BMP::Read(const char* fname) {
                 std::vector<uint8_t> cur_bytes(cur_stride);
                 for (int32_t y = 0; y < bmp_info_header.height; ++y) {
                     inp.read(reinterpret_cast<char*>(cur_bytes.data()), cur_stride);
-                    inp.read(reinterpret_cast<char*>(padding_row.data()), sizeof(padding_row));
+                    inp.read(reinterpret_cast<char*>(padding_row.data()), static_cast<std::streamsize>(padding_row.size()));
                     for (int32_t x = 0; x < bmp_info_header.width; ++x) {
                         data[y][x] = Pixel(cur_bytes[x * 3], cur_bytes[x * 3 + 1], cur_bytes[x * 3 + 2]);
                     }
