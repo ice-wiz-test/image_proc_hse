@@ -37,8 +37,7 @@ void BMP::WriteAll(std::ofstream& of) {
         }
         for (uint32_t padding = 0; padding < new_stride - cur_stride; ++padding) {
             std::vector<uint8_t> a = {0};
-            of.write(reinterpret_cast<const char*>(a.data()),
-                     static_cast<std::streamsize>(a.size()));
+            of.write(reinterpret_cast<const char*>(a.data()), static_cast<std::streamsize>(a.size()));
         }
     }
 }
