@@ -43,3 +43,23 @@ void MatrixFilter::Process(BMP& image) {
     }
     image.data = new_data;
 }
+
+void LinearFilter::Process(BMP& image) {
+    for (int32_t row_index = 0; row_index < image.bmp_info_header.height; ++row_index) {
+        for(int32_t other_index = 0; other_index < image.bmp_info_header.width; ++other_index) {
+            Pixel* cur_pixel = image.at(row_index, other_index);
+            double resulting_blue = linear_filters[0][0] + linear_filters[0][1] * static_cast<double>(cur_pixel->blue)
+                                    + linear_filters[0][2] * static_cast<double>(cur_pixel->green) + linear_filters[0][3] * static_cast<double>(cur_pixel->red);
+            double resulting_green = linear_filters[1][0] + linear_filters[1][1] * static_cast<double>(cur_pixel->blue)
+                                    + linear_filters[1][2] * static_cast<double>(cur_pixel->green) + linear_filters[1][3] * static_cast<double>(cur_pixel->red);
+            double resulting_red = linear_filters[2][0] + linear_filters[2][1] * static_cast<double>(cur_pixel->blue)
+                                    + linear_filters[2][2] * static_cast<double>(cur_pixel->green) + linear_filters[2][3] * static_cast<double>(cur_pixel->red);
+            resulting_blue = norm_double(resulting_blue);
+            resulting_green = norm_double(resulting_green);
+            resulting_red = norm_double(resulting_red);
+            cur_pixel->blue = resulting_blue;
+            cur_pixel->green = resulting_green;
+            cur_pixel->red = resulting_red;
+        }
+    }
+}
