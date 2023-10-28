@@ -3,22 +3,18 @@
 #include "controller.h"
 
 int main(int argc, char** argv) {
-    if (argc == 0) {
-        std::cout << "Hello! This program can work with BMP images!\n";
-        return 0;
-    }
     if (argc < 3 || argc > 100) {
-        std::cout << "We do not support your request at the moment" << std::endl;
+        std::cerr << "We do not support your request at the moment" << std::endl;
         return 0;
     }
     std::string file_name = argv[1];
-    std::cout << file_name << " name !" << std::endl;
+    std::cerr << file_name << " name !" << std::endl;
     BMP write_BMP;
     try {
         write_BMP = BMP(file_name.c_str());
     }
     catch(std::exception& e) {
-        std::cout << "Try again\n" << std::endl;
+        std::cerr << "Try again\n" << std::endl;
         return 0;
     }
     std::string write_to_name = argv[2];
@@ -32,7 +28,13 @@ int main(int argc, char** argv) {
         write_BMP.write(write_to_name.c_str());
     }
     catch(std::exception& e) {
-        std::cout << "Try again\n" << std::endl;
+        std::cerr << "Try again\n" << std::endl;
         return 0;
     }
+   /*BMP write_BMP = BMP("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/lenna.bmp");
+   Controller generic_controller = Controller();
+   generic_controller.add_string("-gs");
+   generic_controller.add_string("-neg");
+   generic_controller.make_all_adjustments(write_BMP);
+   write_BMP.write("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/test2.bmp");*/
 }
