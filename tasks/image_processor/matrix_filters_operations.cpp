@@ -46,7 +46,7 @@ void MatrixFilter::Process(BMP& image) {
             resulting_blue = norm_double(resulting_blue);
             resulting_green = norm_double(resulting_green);
             resulting_red = norm_double(resulting_red);
-            new_data[row_index][other_index] = 
+            new_data[row_index][other_index] =
                 Pixel(get_pixel_from_double(resulting_blue), get_pixel_from_double(resulting_green),
                       get_pixel_from_double(resulting_red));
         }
@@ -61,7 +61,8 @@ void LinearFilter::Process(BMP& image) {
             double resulting_blue = linear_filters[0][0] + linear_filters[0][1] * static_cast<double>(cur_pixel->blue) +
                                     linear_filters[0][2] * static_cast<double>(cur_pixel->green) +
                                     linear_filters[0][3] * static_cast<double>(cur_pixel->red);
-            double resulting_green = linear_filters[1][0] + linear_filters[1][1] * static_cast<double>(cur_pixel->blue) +
+            double resulting_green = linear_filters[1][0] +
+                                     linear_filters[1][1] * static_cast<double>(cur_pixel->blue) +
                                      linear_filters[1][2] * static_cast<double>(cur_pixel->green) +
                                      linear_filters[1][3] * static_cast<double>(cur_pixel->red);
             double resulting_red = linear_filters[2][0] + linear_filters[2][1] * static_cast<double>(cur_pixel->blue) +
@@ -99,7 +100,9 @@ void MatrixFilter::Process(BMP& image, double threshold) {
             resulting_blue = try_double(resulting_blue, threshold);
             resulting_green = try_double(resulting_green, threshold);
             resulting_red = try_double(resulting_red, threshold);
-            new_data[row_index][other_index] = Pixel(get_pixel_from_double(resulting_blue), get_pixel_from_double(resulting_green), get_pixel_from_double(resulting_red));
+            new_data[row_index][other_index] = 
+                Pixel(get_pixel_from_double(resulting_blue), get_pixel_from_double(resulting_green),
+                    get_pixel_from_double(resulting_red));
         }
     }
     image.data = new_data;

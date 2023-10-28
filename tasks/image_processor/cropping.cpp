@@ -12,11 +12,15 @@ void BMP::crop(int32_t new_width, int32_t new_height) {
     for (int32_t height_iter = 0; height_iter < resulting_height; ++height_iter) {
         new_data[height_iter].resize(resulting_width);
     }
-    for (int32_t height_iter = bmp_info_header.height - resulting_height; height_iter < bmp_info_header.height; ++height_iter) {
-        for(int32_t row_iter = 0; row_iter < resulting_width; ++row_iter) {
-            new_data[height_iter - bmp_info_header.height + resulting_height][row_iter].blue = data[height_iter][row_iter].blue;
-            new_data[height_iter - bmp_info_header.height + resulting_height][row_iter].green = data[height_iter][row_iter].green;
-            new_data[height_iter - bmp_info_header.height + resulting_height][row_iter].red = data[height_iter][row_iter].red;
+    for (int32_t height_iter = bmp_info_header.height - resulting_height; height_iter < bmp_info_header.height;
+         ++height_iter) {
+        for (int32_t row_iter = 0; row_iter < resulting_width; ++row_iter) {
+            new_data[height_iter - bmp_info_header.height + resulting_height][row_iter].blue =
+                data[height_iter][row_iter].blue;
+            new_data[height_iter - bmp_info_header.height + resulting_height][row_iter].green =
+                data[height_iter][row_iter].green;
+            new_data[height_iter - bmp_info_header.height + resulting_height][row_iter].red =
+                data[height_iter][row_iter].red;
         }
     }
     BMP copyBMP = BMP(resulting_width, resulting_height);

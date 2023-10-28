@@ -6,8 +6,8 @@
 const std::vector<std::vector<double>> sharp_matrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
 const std::vector<std::vector<double>> neg_matrix = {{255, -1, 0, 0}, {255, 0, -1, 0}, {255, 0, 0, -1}};
 const std::vector<std::vector<double>> gray_matrix = {
-    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}, 
-    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}, 
+    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)},
+    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)},
     {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}};
 const std::vector<std::vector<double>> edge_matrix = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
 
@@ -36,9 +36,10 @@ public:
         matrix = corresponding_matrix;
     }
 
-    MatrixFilter(std::vector<std::vector<double>> corr_matrix, std::string name_of_filter) : AbstractFilter(name_of_filter) {
+    MatrixFilter(std::vector<std::vector<double>> corr_matrix, std::string name_of_filter)
+        : AbstractFilter(name_of_filter) {
         matrix = corr_matrix;
-    } 
+    }
 
     void Process(BMP& image);
 
@@ -49,7 +50,6 @@ class SharpeningFilter : public MatrixFilter {
 public:
     SharpeningFilter() : MatrixFilter(sharp_matrix) {
     }
-
 };
 
 class LinearFilter : public AbstractFilter {
@@ -78,7 +78,7 @@ public:
     }
 };
 
-class EdgeDetectionFilter : public GrayFilter, public MatrixFilter{
+class EdgeDetectionFilter : public GrayFilter, public MatrixFilter {
 public:
     double threshold;
     EdgeDetectionFilter(double Threshold) : GrayFilter(), MatrixFilter(edge_matrix) {
