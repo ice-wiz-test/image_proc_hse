@@ -6,11 +6,11 @@ Controller::Controller() {
     sharp = SharpeningFilter();
 }
 
-void Controller::add_string(std::string s1) {
+void Controller::AddString(std::string s1) {
     use_sequential.push_back(s1);
 }
 
-void Controller::make_all_adjustments(BMP& image) {
+void Controller::MakeAllAdjustments(BMP& image) {
     size_t current_string_index = 0;
     if (use_sequential.size() > static_cast<size_t>(1000)) {
         throw std::runtime_error("We cannot handle so many filters");

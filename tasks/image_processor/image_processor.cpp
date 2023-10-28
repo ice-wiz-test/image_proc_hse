@@ -20,9 +20,9 @@ int main(int argc, char** argv) {
     Controller current_controller = Controller();
     for (int j = 3; j < argc; ++j) {
         std::string current_argument = argv[j];
-        current_controller.add_string(current_argument);
+        current_controller.AddString(current_argument);
     }
-    current_controller.make_all_adjustments(write_BMP);
+    current_controller.MakeAllAdjustments(write_BMP);
     try {
         write_BMP.write(write_to_name.c_str());
     } catch (std::exception& e) {

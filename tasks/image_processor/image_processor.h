@@ -6,9 +6,17 @@
 #include <iostream>
 #include "pixel.h"
 
+const uint16_t FILETYPE = 0x4D42;
+const uint16_t BITCOUNT = 24;
+const uint32_t REDMASK = 0x00ff0000;
+const uint32_t BLUEMASK = 0x000000ff;
+const uint32_t GREENMASK = 0x0000ff00;
+const uint32_t ALPHAMASK = 0xff000000;
+const uint32_t CLST = 0x73524742;
+
 #pragma pack(push, 1)
 struct BMPFileHeader {
-    uint16_t file_type = 0x4D42;
+    uint16_t file_type = FILETYPE;
     uint32_t file_size = 0;
     uint16_t reserved1 = 0;
     uint16_t reserved2 = 0;
@@ -20,7 +28,7 @@ struct BMPInfoHeader {
     int32_t width = 0;
     int32_t height = 0;
     uint16_t planes = 1;
-    uint16_t bit_count = 24;  // yes, it is const; no, i don't really care
+    uint16_t bit_count = BITCOUNT;  // yes, it is const; no, i don't really care
     uint32_t compression = 0;
     uint32_t size_image = 0;
     int32_t x_pixels_per_meter = 0;
@@ -30,11 +38,11 @@ struct BMPInfoHeader {
 };
 
 struct BMPColorHeader {
-    uint32_t red_mask = 0x00ff0000;
-    uint32_t green_mask = 0x0000ff00;
-    uint32_t blue_mask = 0x000000ff;
-    uint32_t alpha_mask = 0xff000000;
-    uint32_t color_space_type = 0x73524742;
+    uint32_t red_mask = REDMASK;
+    uint32_t green_mask = GREENMASK;
+    uint32_t blue_mask = BLUEMASK;
+    uint32_t alpha_mask = ALPHAMASK;
+    uint32_t color_space_type = CLST;
     uint32_t unused[16]{0};
 };
 #pragma pack(pop)

@@ -9,6 +9,6 @@ public:
     EdgeDetectionFilter edg = EdgeDetectionFilter(static_cast<double>(0));
     std::vector<std::string> use_sequential;
     Controller();
-    void make_all_adjustments(BMP& image);
-    void add_string(std::string s1);
+    void MakeAllAdjustments(BMP& image);
+    void AddString(std::string s1);
 };
