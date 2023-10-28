@@ -31,8 +31,7 @@ public:
 class MatrixFilter : public AbstractFilter {
 public:
     std::vector<std::vector<double>> matrix;
-    MatrixFilter(std::vector<std::vector<double>> corresponding_matrix)
-        : AbstractFilter("Matrix filter.") {
+    MatrixFilter(std::vector<std::vector<double>> corresponding_matrix) : AbstractFilter("Matrix filter.") {
         matrix = corresponding_matrix;
     }
 

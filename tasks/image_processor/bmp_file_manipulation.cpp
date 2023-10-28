@@ -96,7 +96,7 @@ BMP::BMP(const char* fname) {
     read(fname);
 }
 
-void BMP::write(const char *fname) {
+void BMP::write(const char* fname) {
     std::ofstream of{fname, std::ios_base::binary};
     if (of) {
         if (bmp_info_header.bit_count == 24) {
