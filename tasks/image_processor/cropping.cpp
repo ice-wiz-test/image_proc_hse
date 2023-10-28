@@ -23,10 +23,10 @@ void BMP::Crop(int32_t new_width, int32_t new_height) {
                 data[height_iter][row_iter].red;
         }
     }
-    BMP copyBMP = BMP(resulting_width, resulting_height);
+    BMP copy_bmp = BMP(resulting_width, resulting_height);
     swap(data, new_data);
-    bmp_file_header = copyBMP.bmp_file_header;
-    bmp_info_header = copyBMP.bmp_info_header;
-    bmp_color_header = copyBMP.bmp_color_header;
+    bmp_file_header = copy_bmp.bmp_file_header;
+    bmp_info_header = copy_bmp.bmp_info_header;
+    bmp_color_header = copy_bmp.bmp_color_header;
     cur_stride = 3 * resulting_width;
 }

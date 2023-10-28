@@ -32,11 +32,13 @@ void BMP::WriteAll(std::ofstream& of) {
         for (int32_t x = 0; x < bmp_info_header.width; ++x) {
             std::vector<uint8_t> wrapper_around_struct = {data[row_index][x].blue, data[row_index][x].green,
                                                           data[row_index][x].red};
-            of.write(reinterpret_cast<const char*>(wrapper_around_struct.data()), wrapper_around_struct.size());
+            of.write(reinterpret_cast<const char*>(wrapper_around_struct.data()),
+                     static_cast<std::streamsize>(wrapper_around_struct.size()));
         }
         for (uint32_t padding = 0; padding < new_stride - cur_stride; ++padding) {
             std::vector<uint8_t> a = {0};
-            of.write(reinterpret_cast<const char*>(a.data()), a.size());
+            of.write(reinterpret_cast<const char*>(a.data()),
+                     static_cast<std::streamsize>(a.size()));
         }
     }
 }
