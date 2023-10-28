@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
     }
     current_controller.MakeAllAdjustments(write_BMP);
     try {
-        write_BMP.write(write_to_name.c_str());
+        write_BMP.Write(write_to_name.c_str());
     } catch (std::exception& e) {
         std::cerr << "Try again\n" << std::endl;
         return 0;

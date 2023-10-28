@@ -14,20 +14,20 @@ BMP::BMP(int32_t width, int32_t height) {
     for (int32_t height_iter = 0; height_iter < height; ++height_iter) {
         data[height_iter].resize(width);
     }
-    uint32_t new_stride = align_(static_cast<uint32_t>(4));
+    uint32_t new_stride = Align(static_cast<uint32_t>(4));
     bmp_file_header.file_size = bmp_file_header.offset_data +
                                 static_cast<uint32_t>(height) * static_cast<uint32_t>(width) * 3 +
                                 bmp_info_header.height * (new_stride - cur_stride);
 }
 
-void BMP::write_headers(std::ofstream& of) {
+void BMP::WriteHeaders(std::ofstream& of) {
     of.write((const char*)(&bmp_file_header), sizeof(bmp_file_header));
     of.write((const char*)(&bmp_info_header), sizeof(bmp_info_header));
 }
 
-void BMP::write_all(std::ofstream& of) {
-    write_headers(of);
-    uint32_t new_stride = align_(static_cast<uint32_t>(4));
+void BMP::WriteAll(std::ofstream& of) {
+    WriteHeaders(of);
+    uint32_t new_stride = Align(static_cast<uint32_t>(4));
     for (int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
         for (int32_t x = 0; x < bmp_info_header.width; ++x) {
             std::vector<uint8_t> wrapper_around_struct = {data[row_index][x].blue, data[row_index][x].green,
@@ -41,7 +41,7 @@ void BMP::write_all(std::ofstream& of) {
     }
 }
 
-void BMP::read(const char* fname) {
+void BMP::Read(const char* fname) {
     std::ifstream inp{fname, std::ios_base::binary};
     if (inp) {
         inp.read((char*)(&bmp_file_header), sizeof(bmp_file_header));
@@ -69,7 +69,7 @@ void BMP::read(const char* fname) {
                 bmp_file_header.file_size += static_cast<uint32_t>(bmp_info_header.height * bmp_info_header.width * 3);
             } else {
                 cur_stride = bmp_info_header.width * 3;
-                uint32_t new_stride = align_(4);
+                uint32_t new_stride = Align(4);
                 std::vector<uint8_t> padding_row(new_stride - cur_stride);
                 std::vector<uint8_t> cur_bytes(cur_stride);
                 for (int32_t y = 0; y < bmp_info_header.height; ++y) {
@@ -93,14 +93,14 @@ void BMP::read(const char* fname) {
 }
 
 BMP::BMP(const char* fname) {
-    read(fname);
+    Read(fname);
 }
 
-void BMP::write(const char* fname) {
+void BMP::Write(const char* fname) {
     std::ofstream of{fname, std::ios_base::binary};
     if (of) {
         if (bmp_info_header.bit_count == 24) {
-            write_all(of);
+            WriteAll(of);
         } else {
             throw std::runtime_error("This program only works with 24-bit BMP image at the moment");
         }

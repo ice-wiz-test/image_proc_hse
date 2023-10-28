@@ -13,6 +13,7 @@ const uint32_t BLUEMASK = 0x000000ff;
 const uint32_t GREENMASK = 0x0000ff00;
 const uint32_t ALPHAMASK = 0xff000000;
 const uint32_t CLST = 0x73524742;
+const size_t UNUSED_SIZE = 16;
 
 #pragma pack(push, 1)
 struct BMPFileHeader {
@@ -43,7 +44,7 @@ struct BMPColorHeader {
     uint32_t blue_mask = BLUEMASK;
     uint32_t alpha_mask = ALPHAMASK;
     uint32_t color_space_type = CLST;
-    uint32_t unused[16]{0};
+    uint32_t unused[UNUSED_SIZE]{0};
 };
 #pragma pack(pop)
 
@@ -57,24 +58,24 @@ public:
 
     BMP(){};
 
-    BMP(const char* file_name);
+    explicit BMP(const char* file_name);
 
-    void read(const char* file_name);
+    void Read(const char* file_name);
 
     BMP(int32_t width, int32_t height);
 
-    void write(const char* file_name);
+    void Write(const char* file_name);
 
-    void crop(int32_t new_height, int32_t new_width);
+    void Crop(int32_t new_height, int32_t new_width);
 
-    Pixel* at(int32_t x0, int32_t y0);
+    Pixel* At(int32_t x0, int32_t y0);
 
 private:
-    uint32_t align_(uint32_t align_by);
+    uint32_t Align(uint32_t align_by);
 
-    void check_correct_colors(BMPColorHeader& current_bmp_color_header);
+    void CheckCorrectColors(BMPColorHeader& current_bmp_color_header);
 
-    void write_all(std::ofstream& of);
+    void WriteAll(std::ofstream& of);
 
-    void write_headers(std::ofstream& of);
+    void WriteHeaders(std::ofstream& of);
 };

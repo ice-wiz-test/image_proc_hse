@@ -1,6 +1,6 @@
 #include "image_processor.h"
 
-uint32_t BMP::align_(uint32_t align_by) {
+uint32_t BMP::Align(uint32_t align_by) {
     uint32_t copy_stride = cur_stride;
     while (copy_stride % align_by != static_cast<uint32_t>(0)) {
         copy_stride++;
@@ -8,7 +8,7 @@ uint32_t BMP::align_(uint32_t align_by) {
     return copy_stride;
 }
 
-void BMP::check_correct_colors(BMPColorHeader& current_bmp_color_header) {
+void BMP::CheckCorrectColors(BMPColorHeader& current_bmp_color_header) {
     BMPColorHeader default_header;
     if (current_bmp_color_header.alpha_mask != default_header.alpha_mask ||
         current_bmp_color_header.blue_mask != default_header.blue_mask ||
@@ -21,7 +21,7 @@ void BMP::check_correct_colors(BMPColorHeader& current_bmp_color_header) {
     }
 }
 
-Pixel* BMP::at(int32_t x0, int32_t y0) {
+Pixel* BMP::At(int32_t x0, int32_t y0) {
     int32_t resulting_x0 = x0;
     int32_t resulting_y0 = y0;
     resulting_x0 = std::max(static_cast<int32_t>(0), resulting_x0);

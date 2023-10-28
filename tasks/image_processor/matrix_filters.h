@@ -3,19 +3,19 @@
 #include <string>
 #include <cmath>
 
-const std::vector<std::vector<double>> sharp_matrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
-const std::vector<std::vector<double>> neg_matrix = {{255, -1, 0, 0}, {255, 0, -1, 0}, {255, 0, 0, -1}};
-const std::vector<std::vector<double>> gray_matrix = {
+const std::vector<std::vector<double>> SHARP_MATRIX = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
+const std::vector<std::vector<double>> NEG_MATRIX = {{255, -1, 0, 0}, {255, 0, -1, 0}, {255, 0, 0, -1}};
+const std::vector<std::vector<double>> GRAY_MATRIX = {
     {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)},
     {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)},
     {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}};
-const std::vector<std::vector<double>> edge_matrix = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
+const std::vector<std::vector<double>> EDGE_MATRIX = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
 
 class AbstractFilter {
 public:
     std::string filter_name;
 
-    AbstractFilter(std::string s1) {
+    explicit AbstractFilter(std::string s1) {
         filter_name = s1;
     };
 
@@ -23,7 +23,7 @@ public:
 
     virtual void Process(BMP& image);
 
-    const std::string get_filter_name() {
+    std::string GetFilterName() {
         return filter_name;
     };
 };
@@ -31,11 +31,11 @@ public:
 class MatrixFilter : public AbstractFilter {
 public:
     std::vector<std::vector<double>> matrix;
-    MatrixFilter(std::vector<std::vector<double>> corresponding_matrix) : AbstractFilter("Matrix filter.") {
+    explicit MatrixFilter(std::vector<std::vector<double>> corresponding_matrix) : AbstractFilter("Matrix filter.") {
         matrix = corresponding_matrix;
     }
 
-    MatrixFilter(std::vector<std::vector<double>> corr_matrix, std::string name_of_filter)
+    explicit MatrixFilter(std::vector<std::vector<double>> corr_matrix, std::string name_of_filter)
         : AbstractFilter(name_of_filter) {
         matrix = corr_matrix;
     }
@@ -47,18 +47,18 @@ public:
 
 class SharpeningFilter : public MatrixFilter {
 public:
-    SharpeningFilter() : MatrixFilter(sharp_matrix) {
+    SharpeningFilter() : MatrixFilter(SHARP_MATRIX) {
     }
 };
 
 class LinearFilter : public AbstractFilter {
 public:
     std::vector<std::vector<double>> linear_filters;
-    LinearFilter(std::vector<std::vector<double>> lin_matrix) : AbstractFilter("Linear filter") {
+    explicit LinearFilter(std::vector<std::vector<double>> lin_matrix) : AbstractFilter("Linear filter") {
         linear_filters = lin_matrix;
     }
 
-    LinearFilter(std::vector<std::vector<double>> lin_matrix, std::string filter_name) : AbstractFilter(filter_name) {
+    explicit LinearFilter(std::vector<std::vector<double>> lin_matrix, std::string filter_name) : AbstractFilter(filter_name) {
         linear_filters = lin_matrix;
     }
 
@@ -67,20 +67,20 @@ public:
 
 class NegativeFilter : public LinearFilter {
 public:
-    NegativeFilter() : LinearFilter(neg_matrix) {
+    NegativeFilter() : LinearFilter(NEG_MATRIX) {
     }
 };
 
 class GrayFilter : public LinearFilter {
 public:
-    GrayFilter() : LinearFilter(gray_matrix) {
+    GrayFilter() : LinearFilter(GRAY_MATRIX) {
     }
 };
 
 class EdgeDetectionFilter : public GrayFilter, public MatrixFilter {
 public:
     double threshold;
-    EdgeDetectionFilter(double Threshold) : GrayFilter(), MatrixFilter(edge_matrix) {
+    EdgeDetectionFilter(double Threshold) : GrayFilter(), MatrixFilter(EDGE_MATRIX) {
         threshold = Threshold;
     }
 

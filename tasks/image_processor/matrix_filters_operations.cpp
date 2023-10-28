@@ -37,7 +37,7 @@ void MatrixFilter::Process(BMP& image) {
             double resulting_red = 0;
             for (int32_t x_coord = 0; x_coord < 3; ++x_coord) {
                 for (int32_t y_coord = 0; y_coord < 3; ++y_coord) {
-                    Pixel* pixel_reference = image.at(row_index - 1 + x_coord, other_index - 1 + y_coord);
+                    Pixel* pixel_reference = image.At(row_index - 1 + x_coord, other_index - 1 + y_coord);
                     resulting_blue += static_cast<double>(pixel_reference->blue) * matrix[x_coord][y_coord];
                     resulting_green += static_cast<double>(pixel_reference->green) * matrix[x_coord][y_coord];
                     resulting_red += static_cast<double>(pixel_reference->red) * matrix[x_coord][y_coord];
@@ -57,7 +57,7 @@ void MatrixFilter::Process(BMP& image) {
 void LinearFilter::Process(BMP& image) {
     for (int32_t row_index = 0; row_index < image.bmp_info_header.height; ++row_index) {
         for (int32_t other_index = 0; other_index < image.bmp_info_header.width; ++other_index) {
-            Pixel* cur_pixel = image.at(row_index, other_index);
+            Pixel* cur_pixel = image.At(row_index, other_index);
             double resulting_blue = linear_filters[0][0] + linear_filters[0][1] * static_cast<double>(cur_pixel->blue) +
                                     linear_filters[0][2] * static_cast<double>(cur_pixel->green) +
                                     linear_filters[0][3] * static_cast<double>(cur_pixel->red);
@@ -91,7 +91,7 @@ void MatrixFilter::Process(BMP& image, double threshold) {
             double resulting_red = 0;
             for (int32_t x_coord = 0; x_coord < 3; ++x_coord) {
                 for (int32_t y_coord = 0; y_coord < 3; ++y_coord) {
-                    Pixel* pixel_reference = image.at(row_index - 1 + x_coord, other_index - 1 + y_coord);
+                    Pixel* pixel_reference = image.At(row_index - 1 + x_coord, other_index - 1 + y_coord);
                     resulting_blue += static_cast<double>(pixel_reference->blue) * matrix[x_coord][y_coord];
                     resulting_green += static_cast<double>(pixel_reference->green) * matrix[x_coord][y_coord];
                     resulting_red += static_cast<double>(pixel_reference->red) * matrix[x_coord][y_coord];
