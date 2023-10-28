@@ -5,4 +5,5 @@ add_executable(
     bmp_helper_functions.cpp
     cropping.cpp
     matrix_filters_operations.cpp
+    controller_functions.cpp
 )

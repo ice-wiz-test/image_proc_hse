@@ -46,6 +46,9 @@ public:
     BMPColorHeader bmp_color_header;
     std::vector<std::vector<Pixel>> data;
     uint32_t cur_stride{};
+
+    BMP() {};
+
     BMP(const char* file_name);
     
     void read(const char* file_name);

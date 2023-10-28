@@ -8,6 +8,7 @@ const std::vector<std::vector<double>> neg_matrix = {{255, -1, 0, 0}, {255, 0, -
 const std::vector<std::vector<double>> gray_matrix = {{0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}, 
                                                         {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}, 
                                                         {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}};
+const std::vector<std::vector<double>> edge_matrix = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
 
 class AbstractFilter {
 public:
@@ -38,6 +39,8 @@ public:
     } 
 
     void Process(BMP& image);
+
+    void Process(BMP& image, double threshold);
 };
 
 class SharpeningFilter : public MatrixFilter{
@@ -68,4 +71,17 @@ public:
 class GrayFilter : public LinearFilter{
 public:
     GrayFilter() : LinearFilter(gray_matrix) {}
+};
+
+class EdgeDetectionFilter : public GrayFilter, public MatrixFilter{
+public:
+    double threshold;
+    EdgeDetectionFilter(double Threshold) : GrayFilter(), MatrixFilter(edge_matrix) {
+        threshold = Threshold;
+    }
+
+    void Process(BMP& image) {
+        GrayFilter::Process(image);
+        MatrixFilter::Process(image, threshold);
+    }
 };
