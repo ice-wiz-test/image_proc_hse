@@ -31,7 +31,7 @@ void BMP::write_all(std::ofstream& of) {
     for (int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
         for (int32_t x = 0; x < bmp_info_header.width; ++x) {
             std::vector<uint8_t> wrapper_around_struct = {data[row_index][x].blue, data[row_index][x].green,
-                                                        data[row_index][x].red};
+                                                          data[row_index][x].red};
             of.write((const char*)wrapper_around_struct.data(), wrapper_around_struct.size());
         }
         for (uint32_t padding = 0; padding < new_stride - cur_stride; ++padding) {
@@ -42,7 +42,7 @@ void BMP::write_all(std::ofstream& of) {
 }
 
 void BMP::read(const char* fname) {
-    std::ifstream inp{fname, std::ios_base::binary };
+    std::ifstream inp{fname, std::ios_base::binary};
     if (inp) {
         inp.read((char*)(&bmp_file_header), sizeof(bmp_file_header));
         if (bmp_file_header.file_type != 0x4D42) {
@@ -75,12 +75,12 @@ void BMP::read(const char* fname) {
                 for (int32_t y = 0; y < bmp_info_header.height; ++y) {
                     inp.read((char*)(cur_bytes.data()), cur_stride);
                     inp.read((char*)padding_row.data(), padding_row.size());
-                    for(int32_t x = 0; x < bmp_info_header.width; ++x) {
+                    for (int32_t x = 0; x < bmp_info_header.width; ++x) {
                         data[y][x] = Pixel(cur_bytes[x * 3], cur_bytes[x * 3 + 1], cur_bytes[x * 3 + 2]);
                     }
                 }
                 bmp_file_header.file_size += static_cast<uint32_t>(data.size()) +
-                                            bmp_info_header.height * static_cast<uint32_t>(padding_row.size());
+                                             bmp_info_header.height * static_cast<uint32_t>(padding_row.size());
             }
         } else {
             std::cout << "This program only works with positive heights\n";
@@ -94,7 +94,6 @@ void BMP::read(const char* fname) {
 
 BMP::BMP(const char* fname) {
     read(fname);
-    
 }
 
 void BMP::write(const char *fname) {
