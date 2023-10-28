@@ -7,22 +7,22 @@
 #include "pixel.h"
 
 #pragma pack(push, 1)
-struct BMPFileHeader{
+struct BMPFileHeader {
     uint16_t file_type = 0x4D42;
-    uint32_t file_size = 0;            
-    uint16_t reserved1 = 0;               
-    uint16_t reserved2 = 0;               
-    uint32_t offset_data = 0;  
+    uint32_t file_size = 0;
+    uint16_t reserved1 = 0;
+    uint16_t reserved2 = 0;
+    uint32_t offset_data = 0;
 };
 
-struct BMPInfoHeader{
+struct BMPInfoHeader {
     uint32_t size = 0;
     int32_t width = 0;
     int32_t height = 0;
     uint16_t planes = 1;
-    uint16_t bit_count = 24; //yes, it is const; no, i don't really care
+    uint16_t bit_count = 24;  // yes, it is const; no, i don't really care
     uint32_t compression = 0;
-    uint32_t size_image = 0; 
+    uint32_t size_image = 0;
     int32_t x_pixels_per_meter = 0;
     int32_t y_pixels_per_meter = 0;
     uint32_t colors_used = 0;
@@ -35,7 +35,7 @@ struct BMPColorHeader {
     uint32_t blue_mask = 0x000000ff;
     uint32_t alpha_mask = 0xff000000;
     uint32_t color_space_type = 0x73524742;
-    uint32_t unused[16]{0};    
+    uint32_t unused[16]{0};
 };
 #pragma pack(pop)
 
@@ -47,10 +47,10 @@ public:
     std::vector<std::vector<Pixel>> data;
     uint32_t cur_stride{};
 
-    BMP() {};
+    BMP(){};
 
     BMP(const char* file_name);
-    
+
     void read(const char* file_name);
 
     BMP(int32_t width, int32_t height);

@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     BMP write_BMP;
     try {
         write_BMP = BMP(file_name.c_str());
-    } catch(std::exception& e) {
+    } catch (std::exception& e) {
         std::cerr << "Try again\n" << std::endl;
         return 0;
     }
@@ -25,11 +25,12 @@ int main(int argc, char** argv) {
     current_controller.make_all_adjustments(write_BMP);
     try {
         write_BMP.write(write_to_name.c_str());
-    } catch(std::exception& e) {
+    } catch (std::exception& e) {
         std::cerr << "Try again\n" << std::endl;
         return 0;
     }
-    /*BMP write_BMP = BMP("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/lenna.bmp");
+    /*BMP write_BMP = 
+    BMP("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/lenna.bmp");
     Controller generic_controller = Controller();
     generic_controller.add_string("-gs");
     generic_controller.add_string("-neg");
