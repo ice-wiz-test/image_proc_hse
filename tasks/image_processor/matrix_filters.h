@@ -54,12 +54,12 @@ public:
 class LinearFilter : public AbstractFilter {
 public:
     std::vector<std::vector<double>> linear_filters;
-    explicit LinearFilter(std::vector<std::vector<double>> lin_matrix)
-        : AbstractFilter("Linear filter") {
+    explicit LinearFilter(std::vector<std::vector<double>> lin_matrix) : AbstractFilter("Linear filter") {
         linear_filters = lin_matrix;
     }
 
-    explicit LinearFilter(std::vector<std::vector<double>> lin_matrix, std::string filter_name) : AbstractFilter(filter_name) {
+    explicit LinearFilter(std::vector<std::vector<double>> lin_matrix, std::string filter_name)
+        : AbstractFilter(filter_name) {
         linear_filters = lin_matrix;
     }
 
