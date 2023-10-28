@@ -23,7 +23,7 @@ public:
 
     virtual void Process(BMP& image);
 
-    std::string GetFilterName() {
+    std::string const GetFilterName() {
         return filter_name;
     };
 };
@@ -81,8 +81,8 @@ public:
 class EdgeDetectionFilter : public GrayFilter, public MatrixFilter {
 public:
     double threshold;
-    EdgeDetectionFilter(double Threshold) : GrayFilter(), MatrixFilter(EDGE_MATRIX) {
-        threshold = Threshold;
+    explicit EdgeDetectionFilter(double thr) : GrayFilter(), MatrixFilter(EDGE_MATRIX) {
+        threshold = thr;
     }
 
     void Process(BMP& image) {
