@@ -9,15 +9,15 @@ BMP::BMP(int32_t width, int32_t height) {
     bmp_info_header.height = height;
     bmp_info_header.size = sizeof(BMPInfoHeader);
     bmp_file_header.offset_data = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader);
-    cur_stride = width * 3;  // 3 - const, number of bytes in 24 bits; 
+    cur_stride = width * 3;  // 3 - const, number of bytes in 24 bits;
     data.resize(height);
     for (int32_t height_iter = 0; height_iter < height; ++height_iter) {
         data[height_iter].resize(width);
     }
     uint32_t new_stride = align_(static_cast<uint32_t>(4));
-    bmp_file_header.file_size = bmp_file_header.offset_data + 
-    static_cast<uint32_t>(height) * static_cast<uint32_t>(width) * 3 + 
-    bmp_info_header.height * (new_stride - cur_stride);
+    bmp_file_header.file_size = bmp_file_header.offset_data +
+                                static_cast<uint32_t>(height) * static_cast<uint32_t>(width) * 3 +
+                                bmp_info_header.height * (new_stride - cur_stride);
 }
 
 void BMP::write_headers(std::ofstream& of) {
@@ -31,7 +31,7 @@ void BMP::write_all(std::ofstream& of) {
     for (int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
         for (int32_t x = 0; x < bmp_info_header.width; ++x) {
             std::vector<uint8_t> wrapper_around_struct = {data[row_index][x].blue, data[row_index][x].green,
-                                                            data[row_index][x].red};
+                                                        data[row_index][x].red};
             of.write((const char*)wrapper_around_struct.data(), wrapper_around_struct.size());
         }
         for (uint32_t padding = 0; padding < new_stride - cur_stride; ++padding) {
@@ -42,10 +42,10 @@ void BMP::write_all(std::ofstream& of) {
 }
 
 void BMP::read(const char* fname) {
-    std::ifstream inp{ fname, std::ios_base::binary };
+    std::ifstream inp{fname, std::ios_base::binary };
     if (inp) {
         inp.read((char*)(&bmp_file_header), sizeof(bmp_file_header));
-        if(bmp_file_header.file_type != 0x4D42) {
+        if (bmp_file_header.file_type != 0x4D42) {
             throw std::runtime_error("Please use the correct format");
         }
         inp.read((char*)&bmp_info_header, sizeof(bmp_info_header));
@@ -79,17 +79,17 @@ void BMP::read(const char* fname) {
                         data[y][x] = Pixel(cur_bytes[x * 3], cur_bytes[x * 3 + 1], cur_bytes[x * 3 + 2]);
                     }
                 }
-                bmp_file_header.file_size += static_cast<uint32_t>(data.size()) + bmp_info_header.height * static_cast<uint32_t>(padding_row.size());
+                bmp_file_header.file_size += static_cast<uint32_t>(data.size()) +
+                                            bmp_info_header.height * static_cast<uint32_t>(padding_row.size());
             }
-            } else {
-                std::cout << "This program only works with positive heights\n";
-                throw std::runtime_error("This program only works with positive heights.");
-            }
+        } else {
+            std::cout << "This program only works with positive heights\n";
+            throw std::runtime_error("This program only works with positive heights.");
         }
-        else {
-            std::cout << " Unable to open the input image file\n";
-            throw std::runtime_error("Unable to open the input image file.");
-        }
+    } else {
+        std::cout << " Unable to open the input image file\n";
+        throw std::runtime_error("Unable to open the input image file.");
+    }
 }
 
 BMP::BMP(const char* fname) {
@@ -98,15 +98,14 @@ BMP::BMP(const char* fname) {
 }
 
 void BMP::write(const char *fname) {
-    std::ofstream of{ fname, std::ios_base::binary };
-        if (of) {
-            if (bmp_info_header.bit_count == 24) {
-                write_all(of);
-            } else {
-                throw std::runtime_error("This program only works with 24-bit BMP image at the moment");    
-            }
+    std::ofstream of{fname, std::ios_base::binary };
+    if (of) {
+        if (bmp_info_header.bit_count == 24) {
+            write_all(of);
+        } else {
+            throw std::runtime_error("This program only works with 24-bit BMP image at the moment");    
         }
-        else {
-            throw std::runtime_error("Unable to open the output image file.");
-        }
+    } else {
+        throw std::runtime_error("Unable to open the output image file.");
+    }
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "matrix_filters.h"
 
-class Controller{
+class Controller {
 public:
     NegativeFilter neg = NegativeFilter();
     SharpeningFilter sharp = SharpeningFilter();

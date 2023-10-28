@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-struct Pixel{
+struct Pixel {
     uint8_t red = 0;
     uint8_t blue = 0;
     uint8_t green = 0;
