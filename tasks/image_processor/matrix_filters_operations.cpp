@@ -102,7 +102,7 @@ void MatrixFilter::Process(BMP& image, double threshold) {
             resulting_red = try_double(resulting_red, threshold);
             new_data[row_index][other_index] =
                 Pixel(get_pixel_from_double(resulting_blue), get_pixel_from_double(resulting_green),
-                    get_pixel_from_double(resulting_red));
+                      get_pixel_from_double(resulting_red));
         }
     }
     image.data = new_data;
