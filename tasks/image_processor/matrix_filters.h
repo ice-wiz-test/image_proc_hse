@@ -23,7 +23,7 @@ public:
 
     virtual void Process(BMP& image);
 
-    std::string const GetFilterName() {
+    std::string GetFilterName() const {
         return filter_name;
     };
 };

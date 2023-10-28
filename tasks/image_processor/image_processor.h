@@ -71,7 +71,7 @@ public:
     Pixel* At(int32_t x0, int32_t y0);
 
 private:
-    uint32_t Align(uint32_t align_by);
+    uint32_t Align (uint32_t align_by) const;
 
     void CheckCorrectColors(BMPColorHeader& current_bmp_color_header);
 

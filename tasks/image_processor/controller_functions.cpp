@@ -1,5 +1,8 @@
 #include "controller.h"
 
+const size_t MAXSIZE = 1000;
+const size_t MAXSTRSIZE = 5;
+
 Controller::Controller() {
     neg = NegativeFilter();
     gr = GrayFilter();
@@ -12,7 +15,7 @@ void Controller::AddString(std::string s1) {
 
 void Controller::MakeAllAdjustments(BMP& image) {
     size_t current_string_index = 0;
-    if (use_sequential.size() > static_cast<size_t>(1000)) {
+    if (use_sequential.size() > MAXSIZE) {
         throw std::runtime_error("We cannot handle so many filters");
     }
     while (current_string_index < use_sequential.size()) {
@@ -31,9 +34,9 @@ void Controller::MakeAllAdjustments(BMP& image) {
             current_string_index++;
             continue;
         }
-        if (use_sequential[current_string_index].substr(0, 5) == "-edge") {
+        if (use_sequential[current_string_index].substr(0, MAXSTRSIZE) == "-edge") {
             double d = -1;
-            std::string left_to_do = use_sequential[current_string_index].substr(5);
+            std::string left_to_do = use_sequential[current_string_index].substr(MAXSTRSIZE);
             try {
                 d = stod(left_to_do);
             } catch (const std::exception& e) {
