@@ -49,25 +49,22 @@ void BMP::read(const char* fname) {
             inp.seekg(bmp_file_header.offset_data, inp.beg);
             bmp_info_header.size = sizeof(BMPInfoHeader);
             bmp_file_header.offset_data = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader);
-            std::cout << " THIS IS A PROBLEM\n";
             
             bmp_file_header.file_size = bmp_file_header.offset_data;
-
             if (bmp_info_header.height > 0) {
                 data.resize(bmp_info_header.height);
                 for(int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
                     data[row_index].resize(bmp_info_header.width);
                 }
-
                 if (bmp_info_header.width % 4 == 0) {
                     for (int32_t row_index = 0; row_index < bmp_info_header.height; ++row_index) {
                         for (int32_t second_index = 0; second_index < bmp_info_header.width; ++second_index) {
                             std::vector<uint8_t> next_color(3);
-                            inp.read((char*)next_color.data(), data.size());
+                            inp.read((char*)next_color.data(), next_color.size());
                             data[row_index][second_index] = Pixel(next_color[0], next_color[1], next_color[2]);
                         }
                     }
-                    bmp_file_header.file_size += static_cast<uint32_t>(bmp_info_header.height * bmp_info_header.width);
+                    bmp_file_header.file_size += static_cast<uint32_t>(bmp_info_header.height * bmp_info_header.width * 3);
                 }
                 else {
                     cur_stride = bmp_info_header.width * 3;
@@ -75,8 +72,6 @@ void BMP::read(const char* fname) {
                     std::vector<uint8_t> padding_row(new_stride - cur_stride);
                     std::vector<uint8_t> cur_bytes(cur_stride);
                     for (int32_t y = 0; y < bmp_info_header.height; ++y) {
-                        //inp.read((char*)(data.data() + cur_stride * y), cur_stride);
-                        //inp.read((char*)padding_row.data(), padding_row.size());
                         inp.read((char*)(cur_bytes.data()), cur_stride);
                         inp.read((char*)padding_row.data(), padding_row.size());
                         for(int32_t x = 0; x < bmp_info_header.width; ++x) {
@@ -86,6 +81,7 @@ void BMP::read(const char* fname) {
                     bmp_file_header.file_size += static_cast<uint32_t>(data.size()) + bmp_info_header.height * static_cast<uint32_t>(padding_row.size());
                 }
             } else {
+                std::cout << "This program only works with positive heights\n";
                 throw std::runtime_error("This program only works with positive heights.");
             }
         }

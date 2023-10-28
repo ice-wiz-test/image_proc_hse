@@ -45,6 +45,7 @@ public:
     BMPInfoHeader bmp_info_header;
     BMPColorHeader bmp_color_header;
     std::vector<std::vector<Pixel>> data;
+    uint32_t cur_stride{};
     BMP(const char* file_name);
     
     void read(const char* file_name);
@@ -53,11 +54,11 @@ public:
 
     void write(const char* file_name);
 
-    void crop(int32_t new_height, int32_t new_wdith);
+    void crop(int32_t new_height, int32_t new_width);
+
+    Pixel* at(int32_t x0, int32_t y0);
 
 private:
-    uint32_t cur_stride{};
-
     uint32_t align_(uint32_t align_by);
 
     void check_correct_colors(BMPColorHeader &current_bmp_color_header);

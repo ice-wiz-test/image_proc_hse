@@ -1,7 +1,7 @@
 #include "image_processor.h"
 #include "pixel.h"
 
-void BMP::crop(int32_t new_height, int32_t new_width) {
+void BMP::crop(int32_t new_width, int32_t new_height) {
     if (std::min(new_height, new_width) <= static_cast<int32_t>(0)) {
         throw std::runtime_error("Incorrect cropping parameters!");
     }

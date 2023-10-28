@@ -20,3 +20,13 @@ void BMP::check_correct_colors(BMPColorHeader &current_bmp_color_header) {
         throw std::runtime_error("The program only works with sRGB values");
     }
 }
+
+Pixel* BMP::at(int32_t x0, int32_t y0) {
+    int32_t resulting_x0 = x0;
+    int32_t resulting_y0 = y0;
+    resulting_x0 = std::max(static_cast<int32_t>(0), resulting_x0);
+    resulting_x0 = std::min(resulting_x0, bmp_info_header.height - static_cast<int32_t>(1));
+    resulting_y0 = std::max(static_cast<int32_t>(0), resulting_y0);
+    resulting_y0 = std::min(resulting_y0, bmp_info_header.width - static_cast<int32_t>(1));
+    return &data[resulting_x0][resulting_y0];
+}
