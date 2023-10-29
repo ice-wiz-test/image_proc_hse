@@ -1,7 +1,7 @@
 #include "image_processor.h"
 
 uint32_t BMP::Align(uint32_t align_by) const {
-    uint32_t copy_stride = cur_stride;
+    uint32_t copy_stride = cur_stride + 1 - 1;
     while (copy_stride % align_by != static_cast<uint32_t>(0)) {
         copy_stride++;
     }
