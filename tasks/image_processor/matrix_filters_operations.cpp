@@ -8,7 +8,7 @@ double NormDouble(double t1) {
 }
 
 double TryDouble(double t1, double threshold) {
-    if (t1 > threshold) {
+    if (t1 > threshold * MAXIMUM_VALUE) {
         return MAXIMUM_VALUE;
     } else {
         return MINIMUM_VALUE;
