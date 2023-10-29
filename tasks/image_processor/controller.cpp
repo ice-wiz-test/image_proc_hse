@@ -64,7 +64,7 @@ void Controller::MakeAllAdjustments(BMP& image) {
                 continue;
             }
             gg = GaussianFilter(d);
-            gg.Process(gg);
+            gg.Process(image);
             current_string_index += 2;
             continue;
         }
