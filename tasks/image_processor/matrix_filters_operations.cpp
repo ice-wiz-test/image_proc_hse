@@ -109,7 +109,9 @@ void MatrixFilter::Process(BMP& image, double threshold) {
 }
 
 void GaussianFilter::Process(BMP& image) {
-    if (sigma_parameter < EPS) return;
+    if (sigma_parameter < EPS) {
+        return;
+    }
     std::vector<std::vector<Pixel>> new_data;
     new_data.resize(image.bmp_info_header.height);
     for (int32_t i = 0; i < image.bmp_info_header.height; ++i) {
