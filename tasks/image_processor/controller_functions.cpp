@@ -15,6 +15,7 @@ void Controller::AddString(std::string s1) {
 
 void Controller::MakeAllAdjustments(BMP& image) {
     size_t current_string_index = 0;
+    std::cerr << " Beginning\n";
     if (use_sequential.size() > MAXSIZE) {
         throw std::runtime_error("We cannot handle so many filters");
     }
@@ -49,4 +50,5 @@ void Controller::MakeAllAdjustments(BMP& image) {
             continue;
         }
     }
+    std::cerr << " Ending\n";
 }
