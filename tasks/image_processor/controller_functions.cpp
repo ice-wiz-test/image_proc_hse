@@ -38,7 +38,7 @@ void Controller::MakeAllAdjustments(BMP& image) {
         if (use_sequential[current_string_index].substr(0, MAXSTRSIZE) == "-edge") {
             std::cerr << " DOING EDGE \n";
             double d = -1;
-            std::string left_to_do = use_sequential[current_string_index].substr(MAXSTRSIZE);
+            std::string left_to_do = use_sequential[current_string_index + 1];
             try {
                 d = stod(left_to_do);
                 std::cerr << d << " CUR \n";
