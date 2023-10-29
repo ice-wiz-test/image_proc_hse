@@ -2,6 +2,7 @@
 
 const double MINIMUM_VALUE = 0;
 const double MAXIMUM_VALUE = 255;
+const double EPS = 0.001;
 
 double NormDouble(double t1) {
     return std::max(MINIMUM_VALUE, std::min(MAXIMUM_VALUE, t1));
@@ -102,6 +103,43 @@ void MatrixFilter::Process(BMP& image, double threshold) {
             new_data[row_index][other_index] =
                 Pixel(GetPixelFromDouble(resulting_blue), GetPixelFromDouble(resulting_green),
                       GetPixelFromDouble(resulting_red));
+        }
+    }
+    image.data = new_data;
+}
+
+void GaussianFilter::Process(BMP& image) {
+    if (sigma_parameter < EPS) return;
+    std::vector<std::vector<Pixel>> new_data;
+    new_data.resize(image.bmp_info_header.height);
+    for (int32_t i = 0; i < image.bmp_info_header.height; ++i) {
+        new_data[i].resize(image.bmp_info_header.width);
+    }
+    const double divide_by = static_cast<double>(2) * sigma_parameter * static_cast<double>(M_PI);
+    for (int32_t x0 = 0; x0 < image.bmp_info_header.height; ++x0) {
+        for (int32_t y0 = 0; y0 < image.bmp_info_header.width; ++y0) {
+            double resulting_red = 0;
+            double resulting_blue = 0;
+            double resulting_green = 0;
+            for (int add_fir = std::max(-max_blur_constant, -x0); add_fir < std::min(max_blur_constant, image.bmp_info_header.height - x0); add_fir++) {
+                for (int add_sec = std::max(-max_blur_constant, -y0); add_sec < std::min(max_blur_constant, image.bmp_info_header.width - y0); ++add_sec) {
+                    Pixel* pixel_ref = image.At(x0 + add_fir, y0 + add_sec);
+                    double corresponding_power = static_cast<double>(add_fir * add_fir + add_sec * add_sec);
+                    corresponding_power /= (static_cast<double>(2) * sigma_parameter * sigma_parameter);
+                    corresponding_power = -corresponding_power;
+                    double mult_coeff = exp(corresponding_power);
+                    resulting_red += mult_coeff * static_cast<double>(pixel_ref->red);
+                    resulting_blue += mult_coeff * static_cast<double>(pixel_ref->blue);
+                    resulting_green += mult_coeff * static_cast<double>(pixel_ref->green);
+                }
+            }
+            resulting_red /= divide_by;
+            resulting_blue /= divide_by;
+            resulting_green /= divide_by;
+            uint8_t new_blue = GetPixelFromDouble(NormDouble(resulting_blue));
+            uint8_t new_green = GetPixelFromDouble(NormDouble(resulting_green));
+            uint8_t new_red = GetPixelFromDouble(NormDouble(resulting_red));
+            new_data[x0][y0] = Pixel(new_blue, new_green, new_red);
         }
     }
     image.data = new_data;

@@ -7,6 +7,7 @@ Controller::Controller() {
     neg = NegativeFilter();
     gr = GrayFilter();
     sharp = SharpeningFilter();
+    edg = EdgeDetectionFilter(static_cast<double>(0));
 }
 
 void Controller::AddString(std::string s1) {
@@ -48,6 +49,22 @@ void Controller::MakeAllAdjustments(BMP& image) {
             }
             edg = EdgeDetectionFilter(d);
             edg.Process(image);
+            current_string_index += 2;
+            continue;
+        }
+        if (use_sequential[current_string_index].substr(0, MAXSTRSIZE) == "-blur") {
+            std::cerr << " DOING BLUR \n";
+            double d = -1;
+            std::string left_to_do = use_sequential[current_string_index + 1];
+            try {
+                d = stod(left_to_do);
+                std::cerr << d << " CUR \n";
+            } catch (const std::exception& e) {
+                current_string_index += 2;
+                continue;
+            }
+            gg = GaussianFilter(d);
+            gg.Process(gg);
             current_string_index += 2;
             continue;
         }

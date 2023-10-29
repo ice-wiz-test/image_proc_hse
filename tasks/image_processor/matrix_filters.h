@@ -10,6 +10,7 @@ const std::vector<std::vector<double>> GRAY_MATRIX = {
     {0, static_cast<double>(0.114), static_cast<double>(0.587), static_cast<double>(0.299)},
     {0, static_cast<double>(0.114), static_cast<double>(0.587), static_cast<double>(0.299)}};
 const std::vector<std::vector<double>> EDGE_MATRIX = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
+const int32_t max_blur_constant = 10;
 
 class AbstractFilter {
 public:
@@ -89,4 +90,14 @@ public:
         GrayFilter::Process(image);
         MatrixFilter::Process(image, threshold);
     }
+};
+
+class GaussianFilter : public AbstractFilter{
+public:
+    double sigma_parameter;
+    explicit GaussianFilter(double sigma) : AbstractFilter("Gaussian filter.") {
+        sigma_parameter = sigma;
+    }
+
+    void Process(BMP& image) override;
 };

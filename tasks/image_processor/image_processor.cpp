@@ -1,6 +1,6 @@
+#include "controller.h"
 #include "image_processor.h"
 #include "matrix_filters.h"
-#include "controller.h"
 
 const int MAXFILTER = 100;
 
