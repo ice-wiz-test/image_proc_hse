@@ -10,7 +10,6 @@ int main(int argc, char** argv) {
         return 0;
     }
     std::string file_name = argv[1];
-    std::cerr << file_name << " name !" << std::endl;
     BMP write_bmp;
     try {
         write_bmp = BMP(file_name.c_str());
