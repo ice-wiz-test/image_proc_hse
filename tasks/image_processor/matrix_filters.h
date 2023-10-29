@@ -6,9 +6,9 @@
 const std::vector<std::vector<double>> SHARP_MATRIX = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
 const std::vector<std::vector<double>> NEG_MATRIX = {{255, -1, 0, 0}, {255, 0, -1, 0}, {255, 0, 0, -1}};
 const std::vector<std::vector<double>> GRAY_MATRIX = {
-    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)},
-    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)},
-    {0, static_cast<double>(0.299), static_cast<double>(0.587), static_cast<double>(0.114)}};
+    {0, static_cast<double>(0.114), static_cast<double>(0.587), static_cast<double>(0.299)},
+    {0, static_cast<double>(0.114), static_cast<double>(0.587), static_cast<double>(0.299)},
+    {0, static_cast<double>(0.114), static_cast<double>(0.587), static_cast<double>(0.299)}};
 const std::vector<std::vector<double>> EDGE_MATRIX = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
 
 class AbstractFilter {
