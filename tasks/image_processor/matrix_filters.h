@@ -92,7 +92,7 @@ public:
     }
 };
 
-class GaussianFilter : public AbstractFilter{
+class GaussianFilter : public AbstractFilter {
 public:
     double sigma_parameter;
     explicit GaussianFilter(double sigma) : AbstractFilter("Gaussian filter.") {
