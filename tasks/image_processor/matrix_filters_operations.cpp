@@ -124,10 +124,10 @@ void GaussianFilter::Process(BMP& image) {
             double resulting_blue = 0;
             double resulting_green = 0;
             int32_t low_val = static_cast<int32_t>(llround(sigma_parameter));
-            for (int add_fir = std::max(-low_val, -x0);
-                 add_fir < std::min(low_val + 1, image.bmp_info_header.height - x0); add_fir++) {
-                for (int add_sec = std::max(-low_val, -y0);
-                     add_sec < std::min(low_val, image.bmp_info_header.width - y0); ++add_sec) {
+            for (int add_fir = std::max(-low_val * 2, -x0);
+                 add_fir < std::min(low_val * 2 + 1, image.bmp_info_header.height - x0); add_fir++) {
+                for (int add_sec = std::max(-low_val * 2, -y0);
+                     add_sec < std::min(low_val * 2, image.bmp_info_header.width - y0); ++add_sec) {
                     Pixel* pixel_ref = image.At(x0 + add_fir, y0 + add_sec);
                     double corresponding_power = static_cast<double>(add_fir * add_fir + add_sec * add_sec);
                     corresponding_power /= (static_cast<double>(2) * sigma_parameter * sigma_parameter);
