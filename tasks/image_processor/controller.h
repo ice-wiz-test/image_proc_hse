@@ -3,13 +3,13 @@
 
 class Controller {
 private:
-    NegativeFilter neg;
-    SharpeningFilter sharp;
-    GrayFilter gr;
-    EdgeDetectionFilter edg =
+    NegativeFilter neg_;
+    SharpeningFilter sharp_;
+    GrayFilter gr_;
+    EdgeDetectionFilter edg_ =
         EdgeDetectionFilter(static_cast<double>(0));  // so that there is no non-explicit operators
-    GaussianFilter gg = GaussianFilter(static_cast<double>(0));
-    std::vector<std::string> use_sequential;
+    GaussianFilter gg_ = GaussianFilter(static_cast<double>(0));
+    std::vector<std::string> use_sequential_;
 
 public:
     Controller();
