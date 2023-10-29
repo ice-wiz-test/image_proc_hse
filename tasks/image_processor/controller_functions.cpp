@@ -43,12 +43,12 @@ void Controller::MakeAllAdjustments(BMP& image) {
                 d = stod(left_to_do);
                 std::cerr << d << " CUR \n";
             } catch (const std::exception& e) {
-                current_string_index++;
+                current_string_index += 2;
                 continue;
             }
             edg = EdgeDetectionFilter(d);
             edg.Process(image);
-            current_string_index++;
+            current_string_index += 2;
             continue;
         }
         current_string_index++;
