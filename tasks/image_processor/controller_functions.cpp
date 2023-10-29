@@ -49,6 +49,7 @@ void Controller::MakeAllAdjustments(BMP& image) {
             current_string_index++;
             continue;
         }
+        current_string_index++;
     }
     std::cerr << " Ending\n";
 }
