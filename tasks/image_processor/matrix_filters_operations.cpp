@@ -135,7 +135,7 @@ void GaussianFilter::Process(BMP& image) {
             for (int add_fir = std::max(-low_val * 3, -x0);
                  add_fir < std::min(low_val * 3 + 1, image.bmp_info_header.height - x0); add_fir++) {
                 for (int add_sec = std::max(-low_val * 3, -y0);
-                     add_sec < std::min(low_val * 3, image.bmp_info_header.width - y0); ++add_sec) {
+                     add_sec < std::min(low_val * 3 + 1, image.bmp_info_header.width - y0); ++add_sec) {
                     Pixel* pixel_ref = image.At(x0 + add_fir, y0 + add_sec);
                     double mult_coeff = precalcing_exps[add_fir * add_fir + add_sec * add_sec];
                     resulting_red += mult_coeff * static_cast<double>(pixel_ref->red);
