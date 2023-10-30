@@ -3,6 +3,7 @@
 const double MINIMUM_VALUE = 0;
 const double MAXIMUM_VALUE = 255;
 const double EPS = 0.001;
+const int MAXSIZE = 2 * 6 * 6;
 
 double NormDouble(double t1) {
     return std::max(MINIMUM_VALUE, std::min(MAXIMUM_VALUE, t1));
@@ -114,7 +115,7 @@ void GaussianFilter::Process(BMP& image) {
     }
     int32_t low_val = static_cast<int32_t>(llround(sigma_parameter));
     std::vector<double> precalcing_exps;
-    precalcing_exps.resize(6 * low_val * low_val + 2);
+    precalcing_exps.resize(MAXSIZE * low_val * low_val + 2);
     for (int32_t i = 0; i < precalcing_exps.size(); ++i) {
         double current_power = i;
         current_power /= (static_cast<double>(2) * sigma_parameter * sigma_parameter);
