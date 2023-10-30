@@ -5,5 +5,4 @@
 void RunTests() {
     BMP image = BMP();
     Controller first_cr = Controller();
-    
 }
