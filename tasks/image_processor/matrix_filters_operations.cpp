@@ -3,7 +3,6 @@
 const double MINIMUM_VALUE = 0;
 const double MAXIMUM_VALUE = 255;
 const double EPS = 0.001;
-const int MAXSIZE = 2 * 6 * 6;
 
 double NormDouble(double t1) {
     return std::max(MINIMUM_VALUE, std::min(MAXIMUM_VALUE, t1));
