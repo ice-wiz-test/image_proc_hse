@@ -126,7 +126,10 @@ void GaussianFilter::Process(BMP& image) {
             double new_b = 0;
             double new_g = 0;
             for (int32_t small_x = std::max(0, x0 - max_constant);
-                 small_x < std::min(image.bmp_info_header.height, x0 + max_constant); ++small_x) {
+                 small_x < x0 + max_constant; ++small_x) {
+                if (small_x == image.bmp_info_header.width) {
+                    break;
+                }
                 Pixel* pref = image.At(small_x, y0);
                 double sqr = static_cast<double>((small_x - x0) * (small_x - x0));
                 double mult_coeff = exp(-(sqr) / divide_power);
