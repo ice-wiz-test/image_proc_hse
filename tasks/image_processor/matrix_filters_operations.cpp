@@ -112,9 +112,9 @@ void GaussianFilter::Process(BMP& image) {
     if (sigma_parameter < EPS) {
         return;
     }
-    const int32_t MAX_CONSTANT = static_cast<int32_t>(3.0 * sigma_parameter);
-    const double DIVIDE_BY = sqrt(2.0 * M_PI * sigma_parameter * sigma_parameter);
-    const double DIVIDE_POWER = 2.0 * sigma_parameter * sigma_parameter;
+    const int32_t max_constant = static_cast<int32_t>(3.0 * sigma_parameter);
+    const double divide_by = sqrt(2.0 * M_PI * sigma_parameter * sigma_parameter);
+    const double divide_power = 2.0 * sigma_parameter * sigma_parameter;
     std::vector<std::vector<Pixel>> new_data;
     new_data.resize(image.bmp_info_header.height);
     for (int32_t x0 = 0; x0 < image.bmp_info_header.height; ++x0) {
@@ -125,18 +125,18 @@ void GaussianFilter::Process(BMP& image) {
             double new_r = 0;
             double new_b = 0;
             double new_g = 0;
-            for (int32_t small_x = std::max(0, x0 - MAX_CONSTANT);
-                 small_x < std::min(image.bmp_info_header.height, x0 + MAX_CONSTANT); ++small_x) {
+            for (int32_t small_x = std::max(0, x0 - max_constant);
+                 small_x < std::min(image.bmp_info_header.height, x0 + max_constant); ++small_x) {
                 Pixel* pref = image.At(small_x, y0);
                 double sqr = static_cast<double>((small_x - x0) * (small_x - x0));
-                double mult_coeff = exp(-(sqr) / DIVIDE_POWER);
+                double mult_coeff = exp(-(sqr) / divide_power);
                 new_r += mult_coeff * static_cast<double>(pref->red);
                 new_g += mult_coeff * static_cast<double>(pref->green);
                 new_b += mult_coeff * static_cast<double>(pref->blue);
             }
-            new_r /= DIVIDE_BY;
-            new_g /= DIVIDE_BY;
-            new_b /= DIVIDE_BY;
+            new_r /= divide_by;
+            new_g /= divide_by;
+            new_b /= divide_by;
             uint8_t new_red = GetPixelFromDouble(NormDouble(new_r));
             uint8_t new_blue = GetPixelFromDouble(NormDouble(new_b));
             uint8_t new_green = GetPixelFromDouble(NormDouble(new_g));
@@ -149,18 +149,18 @@ void GaussianFilter::Process(BMP& image) {
             double new_r = 0;
             double new_b = 0;
             double new_g = 0;
-            for (int32_t small_y = std::max(0, y0 - MAX_CONSTANT);
-                 small_y < std::min(image.bmp_info_header.width, y0 + MAX_CONSTANT); ++small_y) {
+            for (int32_t small_y = std::max(0, y0 - max_constant);
+                 small_y < std::min(image.bmp_info_header.width, y0 + max_constant); ++small_y) {
                 Pixel* pref = image.At(x0, small_y);
                 double sqr = static_cast<double>((small_y - y0) * (small_y - y0));
-                double mult_coeff = exp(-(sqr) / DIVIDE_POWER);
+                double mult_coeff = exp(-(sqr) / divide_power);
                 new_r += mult_coeff * static_cast<double>(pref->red);
                 new_g += mult_coeff * static_cast<double>(pref->green);
                 new_b += mult_coeff * static_cast<double>(pref->blue);
             }
-            new_r /= DIVIDE_BY;
-            new_g /= DIVIDE_BY;
-            new_b /= DIVIDE_BY;
+            new_r /= divide_by;
+            new_g /= divide_by;
+            new_b /= divide_by;
             uint8_t new_red = GetPixelFromDouble(NormDouble(new_r));
             uint8_t new_blue = GetPixelFromDouble(NormDouble(new_b));
             uint8_t new_green = GetPixelFromDouble(NormDouble(new_g));

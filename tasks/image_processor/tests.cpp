@@ -5,5 +5,4 @@
 void run_tests() {
     BMP image = BMP();
     Controller first_cr = Controller();
-    cr.AddString
 }
