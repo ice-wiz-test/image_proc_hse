@@ -113,43 +113,56 @@ void GaussianFilter::Process(BMP& image) {
     if (sigma_parameter < EPS) {
         return;
     }
-    int32_t low_val = static_cast<int32_t>(llround(sigma_parameter));
-    std::vector<double> precalcing_exps;
-    precalcing_exps.resize(MAXSIZE * low_val * low_val + 2);
-    for (int32_t i = 0; i < static_cast<int32_t>(precalcing_exps.size()); ++i) {
-        double current_power = i;
-        current_power /= (static_cast<double>(2) * sigma_parameter * sigma_parameter);
-        current_power = -current_power;
-        precalcing_exps[i] = exp(current_power);
-    }
+    const int32_t MAX_CONSTANT = static_cast<int32_t>(3.0 * sigma_parameter);
+    const double DIVIDE_BY = sqrt(2.0 * M_PI * sigma_parameter * sigma_parameter);
+    const double DIVIDE_POWER = 2.0 * sigma_parameter * sigma_parameter;
     std::vector<std::vector<Pixel>> new_data;
     new_data.resize(image.bmp_info_header.height);
-    for (int32_t i = 0; i < image.bmp_info_header.height; ++i) {
-        new_data[i].resize(image.bmp_info_header.width);
+    for (int32_t x0 = 0; x0 < image.bmp_info_header.height; ++x0) {
+        new_data[x0].resize(image.bmp_info_header.width);
     }
-    const double divide_by = static_cast<double>(2) * sigma_parameter * static_cast<double>(M_PI);
     for (int32_t x0 = 0; x0 < image.bmp_info_header.height; ++x0) {
         for (int32_t y0 = 0; y0 < image.bmp_info_header.width; ++y0) {
-            double resulting_red = 0;
-            double resulting_blue = 0;
-            double resulting_green = 0;
-            for (int add_fir = std::max(-low_val, -x0);
-                 add_fir < std::min(low_val * 2 + 1, image.bmp_info_header.height - x0); add_fir++) {
-                for (int add_sec = std::max(-low_val * 2, -y0);
-                     add_sec < std::min(low_val * 2 + 1, image.bmp_info_header.width - y0); ++add_sec) {
-                    Pixel* pixel_ref = image.At(x0 + add_fir, y0 + add_sec);
-                    double mult_coeff = precalcing_exps[add_fir * add_fir + add_sec * add_sec];
-                    resulting_red += mult_coeff * static_cast<double>(pixel_ref->red);
-                    resulting_blue += mult_coeff * static_cast<double>(pixel_ref->blue);
-                    resulting_green += mult_coeff * static_cast<double>(pixel_ref->green);
-                }
+            double new_r = 0;
+            double new_b = 0;
+            double new_g = 0;
+            for (int32_t small_x = std::max(0, x0 - MAX_CONSTANT); small_x < std::min(image.bmp_info_header.height, x0 + MAX_CONSTANT); ++small_x) {
+                Pixel* pref = image.At(small_x, y0);
+                double sqr = static_cast<double>((small_x - x0) * (small_x - x0));
+                double mult_coeff = exp(-(sqr) / DIVIDE_POWER);
+                new_r += mult_coeff * static_cast<double>(pref->red);
+                new_g += mult_coeff * static_cast<double>(pref->green);
+                new_b += mult_coeff * static_cast<double>(pref->blue);
             }
-            resulting_red /= divide_by;
-            resulting_blue /= divide_by;
-            resulting_green /= divide_by;
-            uint8_t new_blue = GetPixelFromDouble(NormDouble(resulting_blue));
-            uint8_t new_green = GetPixelFromDouble(NormDouble(resulting_green));
-            uint8_t new_red = GetPixelFromDouble(NormDouble(resulting_red));
+            new_r /= DIVIDE_BY;
+            new_g /= DIVIDE_BY;
+            new_b /= DIVIDE_BY;
+            uint8_t new_red = GetPixelFromDouble(NormDouble(new_r));
+            uint8_t new_blue = GetPixelFromDouble(NormDouble(new_b));
+            uint8_t new_green = GetPixelFromDouble(NormDouble(new_g));
+            new_data[x0][y0] = Pixel(new_blue, new_green, new_red);
+        }
+    }
+    image.data = new_data;
+    for (int32_t x0 = 0; x0 < image.bmp_info_header.height; ++x0) {
+        for (int32_t y0 = 0; y0 < image.bmp_info_header.width; ++y0) {
+            double new_r = 0;
+            double new_b = 0;
+            double new_g = 0;
+            for (int32_t small_y = std::max(0, y0 - MAX_CONSTANT); small_y < std::min(image.bmp_info_header.width, y0 + MAX_CONSTANT); ++small_y) {
+                Pixel* pref = image.At(x0, small_y);
+                double sqr = static_cast<double>((small_y - y0) * (small_y - y0));
+                double mult_coeff = exp(-(sqr) / DIVIDE_POWER);
+                new_r += mult_coeff * static_cast<double>(pref->red);
+                new_g += mult_coeff * static_cast<double>(pref->green);
+                new_b += mult_coeff * static_cast<double>(pref->blue);
+            }
+            new_r /= DIVIDE_BY;
+            new_g /= DIVIDE_BY;
+            new_b /= DIVIDE_BY;
+            uint8_t new_red = GetPixelFromDouble(NormDouble(new_r));
+            uint8_t new_blue = GetPixelFromDouble(NormDouble(new_b));
+            uint8_t new_green = GetPixelFromDouble(NormDouble(new_g));
             new_data[x0][y0] = Pixel(new_blue, new_green, new_red);
         }
     }
