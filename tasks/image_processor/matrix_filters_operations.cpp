@@ -112,9 +112,9 @@ void GaussianFilter::Process(BMP& image) {
     if (sigma_parameter < EPS) {
         return;
     }
-    int32_t max_constant = static_cast<int32_t>(3.0 * sigma_parameter);
-    double divide_by = sqrt(2.0 * M_PI * sigma_parameter * sigma_parameter);
-    double divide_power = 2.0 * sigma_parameter * sigma_parameter;
+    int32_t max_constant = static_cast<int32_t>(static_cast<double>(3) * sigma_parameter);
+    double divide_by = sqrt(static_cast<double>(2) * M_PI * sigma_parameter * sigma_parameter);
+    double divide_power = static_cast<double>(2) * sigma_parameter * sigma_parameter;
     std::vector<std::vector<Pixel>> new_data;
     new_data.resize(image.bmp_info_header.height);
     for (int32_t x0 = 0; x0 < image.bmp_info_header.height; ++x0) {
