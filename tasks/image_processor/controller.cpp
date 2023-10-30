@@ -67,6 +67,21 @@ void Controller::MakeAllAdjustments(BMP& image) {
             current_string_index += 2;
             continue;
         }
+        if (use_sequential_[current_string_index].substr(0, MAXSTRSIZE) == "-shak") {
+            int32_t d = -1;
+            std::string left_to_do = use_sequential_[current_string_index + 1];
+            try {
+                d = stoi(left_to_do);
+                std::cerr << d << " CUR \n";
+            } catch (const std::exception& e) {
+                current_string_index += 2;
+                continue;
+            }
+            pf_ = PixellateFilter(d);
+            pf_.Process(image);
+            current_string_index += 2;
+            continue;
+        }
         current_string_index++;
     }
     std::cerr << " Ending\n";
