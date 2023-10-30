@@ -5,6 +5,7 @@
 const int MAXFILTER = 100;
 
 int main(int argc, char** argv) {
+    run_tests();
     if (argc < 3 || argc > MAXFILTER) {
         std::cerr << "We do not support your request at the moment" << std::endl;
         return 0;
