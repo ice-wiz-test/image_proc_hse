@@ -5,7 +5,7 @@
 const int MAXFILTER = 100;
 
 int main(int argc, char** argv) {
-    /*if (argc < 3 || argc > MAXFILTER) {
+    if (argc < 3 || argc > MAXFILTER) {
         std::cerr << "We do not support your request at the moment" << std::endl;
         return 0;
     }
@@ -29,9 +29,5 @@ int main(int argc, char** argv) {
     } catch (std::exception& e) {
         std::cerr << "Try again\n" << std::endl;
         return 0;
-    }*/
-    BMP tim = BMP("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/test_script/data/lenna.bmp");
-    GaussianFilter gg = GaussianFilter(static_cast<double>(7.5));
-    gg.Process(tim);
-    tim.Write("C:/Windows/System32/2023-cpp-pmi-pilot/pmi-233-1-Prokhor-Larichev-indukvtsiane/tasks/image_processor/ed.bmp");
+    }
 }
