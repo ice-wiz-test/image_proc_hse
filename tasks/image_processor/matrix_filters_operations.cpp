@@ -166,3 +166,11 @@ void GaussianFilter::Process(BMP& image) {
     }
     image.data = new_data;
 }
+
+void PixellateFilter::Process(BMP& image) {
+    std::vector<std::vector<Pixel>> new_data;
+    new_data.resize(image.bmp_info_header.height);
+    for (int32_t ind = 0; ind < image.bmp_info_header.height) {
+        new_data[ind].resize(image.bmp_info_header.width);
+    }
+}

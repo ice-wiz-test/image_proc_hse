@@ -100,3 +100,13 @@ public:
 
     void Process(BMP& image) override;
 };
+
+class PixellateFilter : public AbstractFilter {
+public:
+    double square_side;
+    explicit PixellateFilter(double param) : AbstractFilter("Pixellation filter.") {
+        square_side = param;
+    }
+
+    void Process(BMP& image) override;
+}
