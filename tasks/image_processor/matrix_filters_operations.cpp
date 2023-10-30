@@ -116,7 +116,7 @@ void GaussianFilter::Process(BMP& image) {
     int32_t low_val = static_cast<int32_t>(llround(sigma_parameter));
     std::vector<double> precalcing_exps;
     precalcing_exps.resize(MAXSIZE * low_val * low_val + 2);
-    for (int32_t i = 0; i < precalcing_exps.size(); ++i) {
+    for (int32_t i = 0; i < static_cast<int32_t>(precalcing_exps.size()); ++i) {
         double current_power = i;
         current_power /= (static_cast<double>(2) * sigma_parameter * sigma_parameter);
         current_power = -current_power;
@@ -135,7 +135,7 @@ void GaussianFilter::Process(BMP& image) {
             double resulting_green = 0;
             for (int add_fir = std::max(-low_val * 2, -x0);
                  add_fir < std::min(low_val * 2 + 1, image.bmp_info_header.height - x0); add_fir++) {
-                for (int add_sec = std::max(-low_val * 32 -y0);
+                for (int add_sec = std::max(-low_val * 3, -y0);
                      add_sec < std::min(low_val * 2 + 1, image.bmp_info_header.width - y0); ++add_sec) {
                     Pixel* pixel_ref = image.At(x0 + add_fir, y0 + add_sec);
                     double mult_coeff = precalcing_exps[add_fir * add_fir + add_sec * add_sec];
