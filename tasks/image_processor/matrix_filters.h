@@ -103,10 +103,10 @@ public:
 
 class PixellateFilter : public AbstractFilter {
 public:
-    double square_side;
-    explicit PixellateFilter(double param) : AbstractFilter("Pixellation filter.") {
+    int32_t square_side;
+    explicit PixellateFilter(int32_t param) : AbstractFilter("Pixellation filter.") {
         square_side = param;
     }
 
     void Process(BMP& image) override;
-}
+};

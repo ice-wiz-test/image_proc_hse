@@ -170,7 +170,39 @@ void GaussianFilter::Process(BMP& image) {
 void PixellateFilter::Process(BMP& image) {
     std::vector<std::vector<Pixel>> new_data;
     new_data.resize(image.bmp_info_header.height);
-    for (int32_t ind = 0; ind < image.bmp_info_header.height) {
+    for (int32_t ind = 0; ind < image.bmp_info_header.height; ++ind) {
         new_data[ind].resize(image.bmp_info_header.width);
     }
+    for (int32_t x0 = 0; x0 < image.bmp_info_header.height; x0 += square_side) {
+        for (int32_t y0 = 0; y0 < image.bmp_info_header.width; y0 += square_side) {
+            int32_t current_count = 0;
+            int32_t red_sum = 0;
+            int32_t blue_sum = 0;
+            int32_t green_sum = 0;
+            int32_t height = image.bmp_info_header.height;
+            int32_t width = image.bmp_info_header.width;
+            for (int32_t current_x = x0; current_x < std::min(height, x0 + square_side); ++current_x) {
+                for (int32_t current_y = y0; current_y < std::min(width, y0 + square_side); ++current_y) {
+                    Pixel* pref = image.At(current_x, current_y);
+                    current_count++;
+                    red_sum += pref->red;
+                    blue_sum += pref->blue;
+                    green_sum += pref->green;
+                }
+            }
+            double curr_red = static_cast<double>(red_sum) / static_cast<double>(current_count);
+            double curr_green = static_cast<double>(green_sum) / static_cast<double>(current_count);
+            double curr_blue = static_cast<double>(blue_sum) / static_cast<double>(current_count);
+            uint8_t red_pixel = GetPixelFromDouble(NormDouble(curr_red));
+            uint8_t blue_pixel = GetPixelFromDouble(NormDouble(curr_blue));
+            uint8_t green_pixel = GetPixelFromDouble(NormDouble(curr_green));
+            Pixel npix = Pixel(blue_pixel, green_pixel, red_pixel);
+            for (int32_t current_x = x0; current_x < std::min(height, x0 + square_side); ++current_x) {
+                for (int32_t current_y = y0; current_y < std::min(width, y0 + square_side); ++current_y) {
+                    new_data[current_x][current_y] = npix;
+                }
+            }
+        }
+    }
+    image.data = new_data;
 }
